@@ -1,0 +1,115 @@
+package com.coderapids.docsched.services;
+
+import com.coderapids.docsched.domain.DailySchedule;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.net.URI;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+
+@Path("/v1/dailyschedule")
+public class DailyScheduleResource {
+	private Connection connect = null;
+	private Statement statement = null;
+	private PreparedStatement preparedStatement = null;
+	private ResultSet resultSet = null;
+
+	public DailyScheduleResource() {
+	}
+
+	@GET
+	@Produces("application/json")
+	public String getDailySchedule(@QueryParam("startdate") String startDate,
+								   @QueryParam("enddate") String endDate) {
+
+		JSONObject jsonObject	= new JSONObject();
+		JSONArray jsonArray		= new JSONArray();
+		String sqlString;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			connect = DriverManager
+					.getConnection("jdbc:mysql://localhost/docsched?"
+									+ "user=docdbowner&password=docdbpwd");
+	
+/*	
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date startDate	= simpleDateFormat.parse(startDate);
+			Date endDate	= simpleDateFormat.parse(endDate);
+*/
+			sqlString = "select date_format(schedule_date, '%Y-%m-%d') sched_date,"
+							+ " 'first_name' fi_name, 'last_name' la_name,"
+							+ " 'shift_short' sh_sn, accepted_yn"
+							+ " from schedule_physicians where schedule_date >= '"
+							+ startDate + "' and schedule_date <= '" + endDate + "'";
+System.out.println("sqlString=["+sqlString+"]");
+			preparedStatement = connect.prepareStatement(sqlString);
+			resultSet = preparedStatement.executeQuery();
+			
+			while (resultSet.next()) {
+				DailySchedule dailySchedule = new DailySchedule();
+				
+				dailySchedule.setScheduleDate(resultSet.getString("SCHED_DATE"));
+				dailySchedule.setPhysicianFirstName(resultSet.getString("FI_NAME"));
+				dailySchedule.setPhysicianLastName(resultSet.getString("LA_NAME"));
+				dailySchedule.setShiftShortname(resultSet.getString("SH_SN"));
+				dailySchedule.setAcceptedYN(resultSet.getString("ACCEPTED_YN"));
+				jsonArray.add(dailySchedule);
+			}
+
+			jsonObject.put("dailySchedule", jsonArray);
+
+			System.out.println(jsonObject.toString());
+		}
+		catch (ClassNotFoundException e) {
+			System.out.println("Class not found");
+		} catch (SQLException e) {
+			System.out.println("SQL Exception");
+			System.out.println("SQLException: " + e.getMessage());
+			System.out.println("SQLState: " + e.getSQLState());
+			System.out.println("VendorError: " + e.getErrorCode());
+		} finally {
+			try {
+				connect.close();
+			} catch (SQLException e) {
+				System.out.println("SQL Exception-close");
+				System.out.println("SQLException: " + e.getMessage());
+
+			}
+		}
+		return (jsonObject.toString());
+	}
+	
+	public void updateDailySchedule() {
+	}
+	
+}
