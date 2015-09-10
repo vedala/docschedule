@@ -12,11 +12,23 @@
 <body>
 	<h1>DocSchedule</h1>
 	<div id="maintable">Schedule will be displayed here</div>
-	<script type="text/javascript" src="auth/jquery.js"></script>
-	<script type="text/javascript" src="auth/schedmain.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/auth/jquery.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/auth/schedmain.js"></script>
 	<br/>
 	<div id="div2">
-	<p>User: <shiro:principal property="firstName"/></p>
-	<p><a href="<c:url value='/LogoutUser' />">Logout</a></p>
+	<table cellpadding="5" border="1">
+		<tr>
+			<td>
+				User: <shiro:principal />
+			</td>
+			<td>
+				<a href="<c:url value='/appmain.jsp' />">Home</a>
+			</td>
+			<td>
+				<a href="<c:url value='/LogoutUser' />">Logout</a>
+			</td>
+		</tr>
+	</table>
+	</div>
 </body>
 </html>
