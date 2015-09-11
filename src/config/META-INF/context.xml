@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/nosecurity">
+<Context path="/docsched">
 
     <!-- maxActive: Maximum number of dB connections in pool. 
          -->
@@ -22,7 +22,7 @@
         Connection, Statement, ResultSet, etc. objects that haven't been closed 
         -->
 
-    <Resource name="jdbc/security" auth="Container" 
+    <Resource name="jdbc/docschedDB" auth="Container" 
         maxActive="5" maxIdle="3" maxWait="10000" 
         username="docdbowner" password="docdbpwd" 
         driverClassName="com.mysql.jdbc.Driver" 
