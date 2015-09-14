@@ -2,11 +2,7 @@ package com.coderapids.docsched.services;
 
 import com.coderapids.docsched.domain.DailySchedule;
 import com.coderapids.docsched.domain.PhysicianInfo;
-// import org.w3c.dom.Document;
-// import org.w3c.dom.Element;
-// import org.w3c.dom.NodeList;
 
-// import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -16,27 +12,22 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
-// import javax.ws.rs.core.Response;
-// import javax.ws.rs.core.StreamingOutput;
-// import javax.xml.parsers.DocumentBuilder;
-// import javax.xml.parsers.DocumentBuilderFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.URI;
-// import java.util.Map;
-// import java.util.concurrent.ConcurrentHashMap;
-// import java.util.concurrent.atomic.AtomicInteger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-// import org.json.simple.JSONObject;
-// import org.json.simple.JSONArray;
+
 import java.util.ArrayList;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
