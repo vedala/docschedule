@@ -44,7 +44,7 @@
 	<welcome-file-list>
 		<welcome-file>appmain.jsp</welcome-file>
 	</welcome-file-list>
-	
+
 	<error-page>
 		<error-code>404</error-code>
 		<location>/error.jsp</location>
@@ -52,4 +52,9 @@
 	<error-page>
 		<error-code>500</error-code>
 		<location>/error.jsp</location>
-	</error-page></web-app>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/error.jsp</location>
+	</error-page>
+</web-app>
