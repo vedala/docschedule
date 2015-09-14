@@ -12,7 +12,7 @@
 <body>
 <h1>DocSchedule</h1>
 <p>DocSchedule is an application for generating and viewing physician schedule. The application's primary focus is scheduling for Hospitalist physician groups.</p>
-<p><shiro:guest>Login to view schedule: <a href="login.jsp">Login</a></shiro:guest>
+<p><shiro:guest>Login to view schedule: <a href="<c:url value='/login.jsp' />">Login</a></shiro:guest>
 <shiro:user>You are logged in. Visit schedule page: <a href="<c:url value='/auth/schedmain.jsp'/>">Schedule</a></shiro:user></p>
 </body>
 </html>
