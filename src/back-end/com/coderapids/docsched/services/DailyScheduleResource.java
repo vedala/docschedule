@@ -69,11 +69,13 @@ public class DailyScheduleResource {
 				+ "from schedule_physicians a "
 				+ "inner join physicians as b on a.physician_id = b.physician_id "
 				+ "inner join shifts as c on a.shift_id = c.shift_id "
-				+ "where a.schedule_date >= '" + startDate
-				+ "' and a.schedule_date <= '" + endDate + "' "
+				+ "where a.schedule_date >= ? "
+				+ "and a.schedule_date <= ? "
 				+ "order by a.schedule_date, b.last_name, a.shift_id";
 
 			preparedStatement = connect.prepareStatement(sqlString);
+			preparedStatement.setString(1, startDate);
+			preparedStatement.setString(2, endDate);
 			resultSet = preparedStatement.executeQuery();
 			
 			dailyScheduleArray = new ArrayList<DailySchedule>();
