@@ -31,14 +31,27 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+
 @Path("/v1/dailyschedule")
 public class DailyScheduleResource {
 	private Connection connect = null;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
+	private DataSource dataSource;
 
 	public DailyScheduleResource() {
+		try {
+			Context context = new InitialContext();
+			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/docschedDB");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@GET
@@ -57,11 +70,8 @@ public class DailyScheduleResource {
 		String prevSchedDate;
 		String currSchedDate;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
 			
-			connect = DriverManager
-					.getConnection("jdbc:mysql://localhost/docsched?"
-									+ "user=docdbowner&password=docdbpwd");
+			connect = dataSource.getConnection();
 	
 			sqlString =
 				"select date_format(a.schedule_date, '%Y-%m-%d') sched_date, "
@@ -106,9 +116,7 @@ public class DailyScheduleResource {
 			}
 
 		}
-		catch (ClassNotFoundException e) {
-			System.out.println("Class not found");
-		} catch (SQLException e) {
+		catch (SQLException e) {
 			System.out.println("SQL Exception");
 			System.out.println("SQLException: " + e.getMessage());
 			System.out.println("SQLState: " + e.getSQLState());
