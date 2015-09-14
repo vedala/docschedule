@@ -130,8 +130,5 @@ public class DailyScheduleResource {
 
 		return (jsonString);
 	}
-	
-	public void updateDailySchedule() {
-	}
-	
+
 }
