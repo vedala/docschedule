@@ -72,7 +72,7 @@ public class DailyScheduleResource {
 				+ "where a.schedule_date >= '" + startDate
 				+ "' and a.schedule_date <= '" + endDate + "' "
 				+ "order by a.schedule_date, b.last_name, a.shift_id";
-System.out.println("sqlString=["+sqlString+"]");
+
 			preparedStatement = connect.prepareStatement(sqlString);
 			resultSet = preparedStatement.executeQuery();
 			
@@ -128,7 +128,6 @@ System.out.println("sqlString=["+sqlString+"]");
 			System.out.println("JSON Processing Exception");
 		}
 
-		System.out.println(jsonString);
 		return (jsonString);
 	}
 	
