@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/auth/schedmain.js"></script>
 	<br/>
 	<div id="div2">
+	<shiro:user>
 	<table cellpadding="5" border="1">
 		<tr>
 			<td>
@@ -29,6 +30,7 @@
 			</td>
 		</tr>
 	</table>
+	</shiro:user>
 	</div>
 </body>
 </html>
