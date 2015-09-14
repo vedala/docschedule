@@ -25,7 +25,7 @@
 				<a href="<c:url value='/appmain.jsp' />">Home</a>
 			</td>
 			<td>
-				<a href="<c:url value='/LogoutUser' />">Logout</a>
+				<a href="<c:url value='/logout' />">Logout</a>
 			</td>
 		</tr>
 	</table>
