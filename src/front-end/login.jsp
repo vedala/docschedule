@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1>DocSchedule</h1>
-<form action="LoginUser" method="post">
+<form action="" method="post">
     <table align="left" border="0" cellspacing="0" cellpadding="3">
         <tr>
             <td>Username:</td>
