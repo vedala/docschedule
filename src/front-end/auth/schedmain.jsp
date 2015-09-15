@@ -8,6 +8,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>DocSchedule Schedule Display</title>
+<style type="text/css">
+	.onedaycell {border: 2px solid #CCC;
+				font-size: 0.8em}
+	.outermosttab {
+					border: 1px solid black;
+					font-family: Verdana, Sans-serif;
+					}
+	#toprow {border: 1px solid black;
+			 font-size: 1.5em;
+			 font-weight: normal;
+			 color: #999}
+	#toprow > th {border: 2px solid #CCC}
+	.dateonly {
+			font-size: 1.5em;
+			color: #999
+			}
+</style>
 </head>
 <body>
 	<h1>DocSchedule</h1>
