@@ -14,9 +14,11 @@
 	.outermosttab {
 					border: 1px solid black;
 					font-family: Verdana, Sans-serif;
+					margin-left: auto;
+					margin-right: auto;
 					}
 	#toprow {border: 1px solid black;
-			 font-size: 1.5em;
+			 font-size: 1.2em;
 			 font-weight: normal;
 			 color: #999}
 	#toprow > th {border: 2px solid #CCC}
@@ -24,6 +26,12 @@
 			font-size: 1.5em;
 			color: #999
 			}
+	.monthcolcell {border: 2px solid #CCC;
+				   font-size: 1.2em;
+				   font-weight: bold;
+				   text-align: center;
+				   padding: 0 5px;
+				   color: #999}
 </style>
 </head>
 <body>
