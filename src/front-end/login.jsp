@@ -41,7 +41,7 @@
 					<td>
 					</td>
 					<td>
-					<shiro:user><a href="<c:url value='/appmain.jsp' />">Home</a></shiro:user>
+					<a href="<c:url value='/appmain.jsp' />">Home</a>
 					</td>
 					<td>
 					</td>
