@@ -9,6 +9,11 @@
 <title>DocSchedule Login</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/common.css' />">
 <style type="text/css">
+	#errmessage {
+		margin-top: 10px;
+		width: 80%;
+		color: red;
+		}
 	#logintable {
 		margin-top: 100px;
 		margin-left: auto;
@@ -64,6 +69,11 @@
 					</tr>
 				</table>
 			</form>
+			<div id="errmessage">
+				<c:if test="${shiroLoginFailure != null}">
+					Login failure. Please try again.
+				</c:if>
+			</div>
 		</div>
 	</div>
 </body>
