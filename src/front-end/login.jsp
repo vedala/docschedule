@@ -49,7 +49,6 @@
 			</table>
 		</div>
 		<div id="mainbody">
-			<div id="loginform">
 			<form action="" method="post">
 				<table id="logintable">
 					<tr>
@@ -65,7 +64,6 @@
 					</tr>
 				</table>
 			</form>
-			</div>
 		</div>
 	</div>
 </body>
