@@ -8,6 +8,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>DocSchedule Login</title>
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/common.css' />">
+<style type="text/css">
+	#logintable {
+		margin-top: 100px;
+		margin-left: auto;
+		margin-right: auto;
+		}
+</style>
 </head>
 <body>
 	<div id="fulldiv">
@@ -34,6 +41,7 @@
 					<td>
 					</td>
 					<td>
+					<shiro:user><a href="<c:url value='/appmain.jsp' />">Home</a></shiro:user>
 					</td>
 					<td>
 					</td>
@@ -41,8 +49,9 @@
 			</table>
 		</div>
 		<div id="mainbody">
+			<div id="loginform">
 			<form action="" method="post">
-				<table align="left" border="0" cellspacing="0" cellpadding="3">
+				<table id="logintable">
 					<tr>
 						<td>Username:</td>
 						<td><input type="text" name="username" maxlength="50" /></td>
@@ -56,6 +65,8 @@
 					</tr>
 				</table>
 			</form>
+			</div>
 		</div>
+	</div>
 </body>
 </html>
