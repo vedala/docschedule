@@ -8,6 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>DocSchedule Schedule Display</title>
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/common.css' />">
 <style type="text/css">
 	.onedaycell {border: 2px solid #CCC;
 				font-size: 0.8em}
@@ -20,42 +21,59 @@
 	#toprow {border: 1px solid black;
 			 font-size: 1.2em;
 			 font-weight: normal;
-			 color: #999}
+			 color: #CC5500}
 	#toprow > th {border: 2px solid #CCC}
 	.dateonly {
 			font-size: 1.5em;
-			color: #999
+			color: #CC5500
 			}
 	.monthcolcell {border: 2px solid #CCC;
 				   font-size: 1.2em;
 				   font-weight: bold;
 				   text-align: center;
 				   padding: 0 5px;
-				   color: #999}
+				   color: #CC5500}
 </style>
 </head>
 <body>
-	<h1>DocSchedule</h1>
-	<div id="maintable">Schedule will be displayed here</div>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/auth/jquery.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/auth/schedmain.js"></script>
-	<br/>
-	<div id="div2">
-	<shiro:user>
-	<table cellpadding="5" border="1">
-		<tr>
-			<td>
-				User: <shiro:principal />
-			</td>
-			<td>
-				<a href="<c:url value='/appmain.jsp' />">Home</a>
-			</td>
-			<td>
-				<a href="<c:url value='/logout' />">Logout</a>
-			</td>
-		</tr>
-	</table>
-	</shiro:user>
+	<div id="fulldiv">
+		<div id="header">
+		<table>
+			<tr>
+				<td id="logo" valign="top" width="60%">
+				DocSchedule
+				</td>
+				<td width="20%">
+				</td>
+				<td width="20%">
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td id="userdisp">
+					<shiro:user>User: <shiro:principal /></shiro:user>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+					<shiro:user><a href="<c:url value='/appmain.jsp' />">Home</a></shiro:user>
+				</td>
+				<td id="loginoutlink">
+					<shiro:user><a href="<c:url value='/logout' />">Logout</a></shiro:user>
+				</td>
+			</tr>
+		</table>
+		</div>
+		<div id="mainbody">
+		<div id="maintable">Schedule will be displayed here</div>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/auth/jquery.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/auth/schedmain.js"></script>
+		</div>
 	</div>
 </body>
 </html>
