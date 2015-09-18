@@ -17,6 +17,7 @@
 					font-family: Verdana, Sans-serif;
 					margin-left: auto;
 					margin-right: auto;
+					margin-bottom: 30px;
 					}
 	#toprow {border: 1px solid black;
 			 font-size: 1.2em;
