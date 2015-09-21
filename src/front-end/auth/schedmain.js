@@ -112,31 +112,44 @@ function weeklySchedToHtml(weekSched)
 	var monthNum1;
 	var monthNum2;
 
-	monthNum1 = -1;
-	monthNum2 = -1;
+	var month1Num = -1
+	var month2Num = -1;
+	var month1Str = null;
+	var month2Str = null;
+	var localeOptions = {month : 'short' };
+	
+	//
+	// First column displays short month name. If a row consists of days
+	// from two separate months, then month name is displayed as "Sep / Oct"
+	//
 	for (i = 0; i < weekSched.length; i++)
 	{
 		var dateStr = weekSched[i].scheduleDate;
 		var dateObj2 = new Date(Date.parse(dateStr.substr(5,2) + "/" + dateStr.substr(8,2) + "/" + dateStr.substr(0,4)));
 
-		if (monthNum1 == -1)
+		if (month1Num == -1)
 		{
-			monthNum1 = dateObj2.getMonth();
+			month1Str = dateObj2.toLocaleString("en-US", localeOptions);
+			month1Num = dateObj2.getMonth();
 		}
-		else if (monthNum1 != dateObj2.getMonth())
+		else if (month2Num == -1)
 		{
-			monthNum2 = dateObj2.getMonth();
+			if (month1Num != dateObj2.getMonth())
+			{
+				month2Str = dateObj2.toLocaleString("en-US", localeOptions);
+				month2Num = dateObj2.getMonth();
+			}
 		}
 	}
 
 	var monthStr;
-	if (monthNum2 == -1)
+	if (month2Num == -1)
 	{
-		monthStr = monthToString(monthNum1);
+		monthStr = month1Str;
 	}
 	else
 	{
-		monthStr = monthToString(monthNum1) + " / " + monthToString(monthNum2);
+		monthStr = month1Str + " / " + month2Str;
 	}
 
 	schedString += '<td class="monthcolcell">'
@@ -147,8 +160,6 @@ function weeklySchedToHtml(weekSched)
 	{
 		var dateStr = weekSched[i].scheduleDate;
 		var dateObj2 = new Date(Date.parse(dateStr.substr(5,2) + "/" + dateStr.substr(8,2) + "/" + dateStr.substr(0,4)));
-		var dayOfWeekStr = dayOfWeekString(dateObj2.getDay());
-
 
 		schedString += '<td class="onedaycell">'
 				+ '<table class="datedaytab">'
@@ -215,83 +226,4 @@ function populateStartEndDates(startDates, endDates, dateObj)
 		endDates.push(dateObj.toISOString().substr(0, 10));
 		dateObj.setDate(dateObj.getDate() + 1);
 	}
-}
-
-
-function dayOfWeekString(dayOfWeek)
-{
-	var str;
-	switch (dayOfWeek) {
-		case 0:
-			str = "Sun";
-			break;
-		case 1:
-			str = "Mon";
-			break;
-		case 2:
-			str = "Tue";
-			break;
-		case 3:
-			str = "Wed";
-			break;
-		case 4:
-			str = "Thu";
-			break;
-		case 5:
-			str = "Fri";
-			break;
-		case 6:
-			str = "Sat";
-			break;
-		default:
-			str = "Err";
-			break;
-	}
-	return(str);
-}
-
-function monthToString(monthNum)
-{
-	var str;
-	switch (monthNum) {
-		case 0:
-			str = "Jan";
-			break;
-		case 1:
-			str = "Feb";
-			break;
-		case 2:
-			str = "Mar";
-			break;
-		case 3:
-			str = "Apr";
-			break;
-		case 4:
-			str = "May";
-			break;
-		case 5:
-			str = "Jun";
-			break;
-		case 6:
-			str = "Jul";
-			break;
-		case 7:
-			str = "Aug";
-			break;
-		case 8:
-			str = "Sep";
-			break;
-		case 9:
-			str = "Oct";
-			break;
-		case 10:
-			str = "Nov";
-			break;
-		case 11:
-			str = "Dev";
-			break;
-		default:
-			str = "Err";
-	}
-	return(str);
 }
