@@ -227,3 +227,10 @@ function populateStartEndDates(startDates, endDates, dateObj)
 		dateObj.setDate(dateObj.getDate() + 1);
 	}
 }
+
+function dayOfWeekString(dayOfWeek)
+{
+	var dayOfWeekWords = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+	
+	return dayOfWeekWords[dayOfWeek];
+}
