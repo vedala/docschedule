@@ -1,4 +1,10 @@
 
+/*
+ * This script is called from the page that displays the
+ * main schedule. The page displays six weeks worth of schedule
+ * starting from current week.
+ */
+
 //
 // Number of weeks to display
 //

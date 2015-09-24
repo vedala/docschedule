@@ -1,3 +1,12 @@
+/*
+ * DailyScheduleResource.java
+ *
+ * This file contains the REST web service that fetches
+ * schedule data from database and outputs the data in
+ * JSON format.
+ *
+ */ 
+
 package com.coderapids.docsched.services;
 
 import com.coderapids.docsched.domain.DailySchedule;
