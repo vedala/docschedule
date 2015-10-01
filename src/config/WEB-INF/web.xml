@@ -10,24 +10,12 @@
 		<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
 	</listener>
 
-	<servlet>
-		<display-name>LoginUser</display-name>
-		<servlet-name>LoginUser</servlet-name>
-		<servlet-class>com.coderapids.docsched.servlet.LoginUser</servlet-class>
-	</servlet>
-	<servlet>
-		<display-name>LogoutUser</display-name>
-		<servlet-name>LogoutUser</servlet-name>
-		<servlet-class>com.coderapids.docsched.servlet.LogoutUser</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>LoginUser</servlet-name>
-		<url-pattern>/LoginUser</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>LogoutUser</servlet-name>
-		<url-pattern>/LogoutUser</url-pattern>
-	</servlet-mapping>
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.html</url-pattern>
+		</jsp-property-group>
+	</jsp-config>
+
 	<filter>
 		<filter-name>ShiroFilter</filter-name>
 		<filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
@@ -42,19 +30,19 @@
 	</filter-mapping>
 	
 	<welcome-file-list>
-		<welcome-file>appmain.jsp</welcome-file>
+		<welcome-file>appmain.html</welcome-file>
 	</welcome-file-list>
 
 	<error-page>
 		<error-code>404</error-code>
-		<location>/error.jsp</location>
+		<location>/error.html</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/error.jsp</location>
+		<location>/error.html</location>
 	</error-page>
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
-		<location>/error.jsp</location>
+		<location>/error.html</location>
 	</error-page>
 </web-app>

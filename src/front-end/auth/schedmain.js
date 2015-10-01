@@ -122,7 +122,6 @@ function weeklySchedToHtml(weekSched)
 	var month2Num = -1;
 	var month1Str = null;
 	var month2Str = null;
-	var localeOptions = {month : 'short' };
 	
 	//
 	// First column displays short month name. If a row consists of days
@@ -135,15 +134,15 @@ function weeklySchedToHtml(weekSched)
 
 		if (month1Num == -1)
 		{
-			month1Str = dateObj2.toLocaleString("en-US", localeOptions);
 			month1Num = dateObj2.getMonth();
+			month1Str = monthToStringShort(month1Num);
 		}
 		else if (month2Num == -1)
 		{
 			if (month1Num != dateObj2.getMonth())
 			{
-				month2Str = dateObj2.toLocaleString("en-US", localeOptions);
 				month2Num = dateObj2.getMonth();
+				month2Str = monthToStringShort(month2Num);
 			}
 		}
 	}
@@ -239,4 +238,12 @@ function dayOfWeekString(dayOfWeek)
 	var dayOfWeekWords = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	
 	return dayOfWeekWords[dayOfWeek];
+}
+
+function monthToStringShort(monthNum)
+{
+	var monthInWords = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
+						'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	
+	return monthInWords[monthNum];
 }
