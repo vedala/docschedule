@@ -36,80 +36,42 @@ populateStartEndDates(startDates, endDates, dateObj);
 var schedHtml;
 var displayWeek = [];
 
-schedHtml = '<table class="outermosttab">';
-schedHtml += displayTableHeading();
+var myUrl;
 
-var myUrl = constructURL(startDates[0], endDates[0]);
+var deferreds = getDisplayData();
 
-$.ajax({
-		url		: myUrl,
-		type	: 'GET',
-		success	: function(response) {
-			schedHtml += '<tr>';
-			displayWeek[0] = weeklySchedToHtml(response);
-			schedHtml += displayWeek[0];
-			schedHtml += '</tr>';
-			myUrl = constructURL(startDates[1], endDates[1]);
-			$.ajax({
-					url		: myUrl,
-					type	: 'GET',
-					success	: function(response) {
-						schedHtml += '<tr>';
-						displayWeek.push(weeklySchedToHtml(response));
-						schedHtml += displayWeek[1];
-						schedHtml += '</tr>';
-						myUrl = constructURL(startDates[2], endDates[2]);
-						$.ajax({
-							url		: myUrl,
-							type	: 'GET',
-							success	: function(response) {
-								schedHtml += '<tr>';
-								displayWeek.push(weeklySchedToHtml(response));
-								schedHtml += displayWeek[2];
-								schedHtml += '</tr>'
-								myUrl = constructURL(startDates[3], endDates[3]);
-								$.ajax({
-									url		: myUrl,
-									type	: 'GET',
-									success	: function(response) {
-										schedHtml += '<tr>';
-										displayWeek.push(weeklySchedToHtml(response));
-										schedHtml += displayWeek[3];
-										schedHtml += '</tr>';
-										myUrl = constructURL(startDates[4], endDates[4]);
-										$.ajax({
-											url		: myUrl,
-											type	: 'GET',
-											success	: function(response) {
-												schedHtml += '<tr>';
-												displayWeek.push(weeklySchedToHtml(response));
-												schedHtml += displayWeek[4];
-												schedHtml += '</tr>';
-												myUrl = constructURL(startDates[5], endDates[5]);
-												$.ajax({
-													url		: myUrl,
-													type	: 'GET',
-													success	: function(response) {
-														schedHtml += '<tr>';
-														displayWeek.push(weeklySchedToHtml(response));
-														schedHtml += displayWeek[5];
-														schedHtml += '</tr>'
-																	+ '</table>';
-														$("#maintable").html(schedHtml);
-														document.close();
-													}
-												});
-											}
-										});
-									}
-								});
-							}
-						});
-					}
-			});
-		}
+$.when.apply(null, deferreds).done(function() {
+	schedHtml = '<table class="outermosttab">';
+
+	schedHtml += displayTableHeading();
+	for (var i = 0; i < weeksToDisplay; i++) {
+		schedHtml += '<tr>';
+		schedHtml += displayWeek[i];
+		schedHtml += '</tr>';
+	}
+	schedHtml += '</table>';
+	$("#maintable").html(schedHtml);
+	document.close();
 });
 
+function getDisplayData() {
+	var deferreds = [];
+
+	for (var i = 0; i < weeksToDisplay; i++) {
+		myUrl = constructURL(startDates[i], endDates[i]);
+		(function(i) {
+			deferreds.push($.ajax({
+				url		: myUrl,
+				type	: 'GET',
+				success	: function(response) {
+					displayWeek[i] = weeklySchedToHtml(response);
+				}
+			}));
+		})(i);
+	}
+
+	return deferreds;
+}
 
 function weeklySchedToHtml(weekSched)
 {
@@ -198,7 +160,8 @@ function weeklySchedToHtml(weekSched)
 
 function constructURL(startDate, endDate)
 {
-	return ("http://www.coderapids.com/docsched/api/v1/dailyschedule?startdate="
+//	return ("http://www.coderapids.com/docsched/api/v1/dailyschedule?startdate="
+	return ("http://localhost:8080/docsched/api/v1/dailyschedule?startdate="
 			+ startDate + "&enddate=" + endDate);
 }
 
