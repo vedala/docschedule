@@ -12,13 +12,19 @@
 var weeksToDisplay = 6;
 
 
-// Get today's date, then extract today's day-of-week.
+// Get today's date, set time to 00:00:00. Setting
+// time to 00:00:00 is important since method toISOString
+// is used which which uses UTC time.
+// Then extract today's day-of-week.
 // Based on today's day-of-week, calculate date of
 // most recent Sunday prior to today. This is required
 // since schedule is displayed Sunday thru Saturday for
 // each week.
 
 var dateObj = new Date();
+dateObj.setHours(0);
+dateObj.setMinutes(0);
+dateObj.setSeconds(0);
 var dayOfWeek = dateObj.getDay();
 if (dayOfWeek != 0) {
 	dateObj.setDate(dateObj.getDate() - dayOfWeek);
@@ -160,8 +166,7 @@ function weeklySchedToHtml(weekSched)
 
 function constructURL(startDate, endDate)
 {
-//	return ("http://www.coderapids.com/docsched/api/v1/dailyschedule?startdate="
-	return ("http://localhost:8080/docsched/api/v1/dailyschedule?startdate="
+	return ("http://www.coderapids.com/docsched/api/v1/dailyschedule?startdate="
 			+ startDate + "&enddate=" + endDate);
 }
 
