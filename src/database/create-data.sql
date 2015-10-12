@@ -1,17 +1,16 @@
 
 
 insert into physicians (first_name, last_name, night_order, side_id)
-values ('Steve', 'Smith', 1, 1);
+values ('Jenny', 'Jones', 1, 1);
 
 insert into physicians (first_name, last_name, night_order, side_id)
-values ('Jenny', 'Jones', 2, 1);
+values ('Mary', 'Malone', 2, 1);
 
 insert into physicians (first_name, last_name, night_order, side_id)
 values ('Nick', 'Nelson', 3, 1);
 
 insert into physicians (first_name, last_name, night_order, side_id)
-values ('Mary', 'Malone', 4, 1);
-
+values ('Steve', 'Smith', 4, 1);
 
 
 
