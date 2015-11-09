@@ -26,7 +26,7 @@
         maxActive="5" maxIdle="3" maxWait="10000" 
         username="docdbowner" password="docdbpwd" 
         driverClassName="com.mysql.jdbc.Driver" 
-        url="jdbc:mysql://localhost/docsched?autoReconnect=true" 
+        url="jdbc:mysql://localhost/docsched" 
         logAbandoned="true" removeAbandoned="true" 
         removeAbandonedTimeout="60" type="javax.sql.DataSource" />
         
