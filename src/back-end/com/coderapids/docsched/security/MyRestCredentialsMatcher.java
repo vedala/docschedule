@@ -1,1 +1,0 @@
-package com.coderapids.docsched.security;import org.apache.shiro.authc.credential.HashedCredentialsMatcher;public class MyRestCredentialsMatcher extends HashedCredentialsMatcher {}

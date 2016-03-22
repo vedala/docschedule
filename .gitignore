@@ -1,4 +1,5 @@
-webapp
+webapp/META-INF
+webapp/WEB-INF/lib
 version0.1
 version0.2
 notes
