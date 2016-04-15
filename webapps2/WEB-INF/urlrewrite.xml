@@ -1,9 +1,0 @@
-<urlrewrite>
-    <rule>
-        <name>Redirect to www</name>
-        <condition name="host" operator="notequal">^www.coderapids.com</condition>
-        <condition name="host" operator="notequal">^localhost</condition>
-        <from>^/(.*)</from>
-        <to type="permanent-redirect" last="true">http://www.coderapids.com/$1</to>
-    </rule>
-</urlrewrite>
