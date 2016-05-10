@@ -19,3 +19,22 @@ Following scenario will help understand the application better:
   three on Day shift and one on Night shift.
 * Day shift is 7am to 7pm. Night shift is 7pm to 7am.
 
+### Features in the Current Version ###
+* The application is currently in early stages of development, so very
+  basic functionality is available.
+* Upon login, schedule for 6 weeks is displayed (starting from current week).
+* Schedule page can be accessed only by authenticated users.
+
+### Planned Features ###
+* Ability to scroll schedule forward and backward, so users can view
+more than six weeks' worth of schedule.
+* Ability to generate schedule. This feature will enable group director
+  to create schedule for a period of time (usually a few months) based
+  on pre-set rules. The pre-set rules are similar to rules described in
+  the Basic Scenario above. This feature will be authorized only for
+  the director.
+* Ability to modify rules. Provide interface to enable the director
+  to modify rules. This feature only authorized for the director.
+* Add SSL support.
+* Ability to Sign-Up users from website.
+* Enhance application to support multiple tenants.
