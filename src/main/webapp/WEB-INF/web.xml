@@ -16,19 +16,6 @@
 		</jsp-property-group>
 	</jsp-config>
 
-	<filter>
-		<filter-name>ShiroFilter</filter-name>
-		<filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>ShiroFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-		<dispatcher>ERROR</dispatcher>
-	</filter-mapping>
-	
 	<welcome-file-list>
 		<welcome-file>appmain.html</welcome-file>
 	</welcome-file-list>
