@@ -6,4 +6,4 @@ utilities
 /webapps2
 /target
 /src/main/db/create-user.sql
-/src/main/resources/META-INF
+/src/main/webapp/META-INF
