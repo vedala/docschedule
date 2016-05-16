@@ -6,6 +6,10 @@
 
 	<display-name>DocSchedule</display-name>
 
+    <listener>
+        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+    </listener>
+
 	<jsp-config>
 		<jsp-property-group>
 			<url-pattern>*.html</url-pattern>
@@ -28,16 +32,5 @@
 	<welcome-file-list>
 		<welcome-file>appmain.html</welcome-file>
 	</welcome-file-list>
-
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>
-
-        </web-resource-collection>
-        <auth-constraint>
-        </auth-constraint>
-        <login-config>
-        </login-config>
-    </security-constraint>
 
 </web-app>
