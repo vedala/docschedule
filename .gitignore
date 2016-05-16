@@ -6,3 +6,4 @@ notes
 utilities
 /webapps2
 /target
+/src/main/db/create-user.sql
