@@ -6,30 +6,38 @@
 
 	<display-name>DocSchedule</display-name>
 
-  	<listener>
-		<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
-	</listener>
-
 	<jsp-config>
 		<jsp-property-group>
 			<url-pattern>*.html</url-pattern>
 		</jsp-property-group>
 	</jsp-config>
 
+    <filter>
+        <filter-name>ShiroFilter</filter-name>
+        <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ShiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
 	<welcome-file-list>
 		<welcome-file>appmain.html</welcome-file>
 	</welcome-file-list>
 
-	<error-page>
-		<error-code>404</error-code>
-		<location>/error.html</location>
-	</error-page>
-	<error-page>
-		<error-code>500</error-code>
-		<location>/error.html</location>
-	</error-page>
-	<error-page>
-		<exception-type>java.lang.Exception</exception-type>
-		<location>/error.html</location>
-	</error-page>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>
+
+        </web-resource-collection>
+        <auth-constraint>
+        </auth-constraint>
+        <login-config>
+        </login-config>
+    </security-constraint>
+
 </web-app>
