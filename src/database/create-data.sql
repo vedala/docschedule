@@ -29,10 +29,10 @@ values ('Priscilla', 'Pichard', 4, 2);
 
 
 insert into shifts (shift_id, start_time, end_time, shortname)
-values (1, str_to_date('07:00', '%H:%i'), str_to_date('19:00','%H:%i'), 'Day');
+values (1, sec_to_time(7*3600), sec_to_time(19*3600), 'Day');
 
 insert into shifts (shift_id, start_time, end_time, shortname)
-values (2, str_to_date('19:00','%H:%i'), str_to_date('07:00', '%H:%i'), 'Night');
+values (2, sec_to_time(19*3600), sec_to_time(7:3600), 'Night');
 
 
 insert into sides(side_id, side_name, start_date)
@@ -42,8 +42,7 @@ insert into sides(side_id, side_name, start_date)
 values (2, 'Side B', '2015-08-11');
 
 
+-- password is secret99
 insert into users(userid, username, password)
 values
-	(1, "appuser1", "secret1"),
-	(2, "appuser2", "secret2"),
-	(3, "appuser99", "secret99");
+	(1, "appuser99", "2550cd7fef492d4110956ffffb48210d8fd05f3854758f8883c640dca6999972");
