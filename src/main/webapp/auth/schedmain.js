@@ -166,8 +166,8 @@ function weeklySchedToHtml(weekSched)
 
 function constructURL(startDate, endDate)
 {
-	return ("http://www.coderapids.com/docsched/api/v1/dailyschedule?startdate="
-			+ startDate + "&enddate=" + endDate);
+    return("http://" + document.location.host + "/docschedule/api/v1/dailyschedule?startdate="
+          + startDate + "&enddate=" + endDate);
 }
 
 
