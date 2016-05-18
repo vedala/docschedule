@@ -166,7 +166,7 @@ function weeklySchedToHtml(weekSched)
 
 function constructURL(startDate, endDate)
 {
-    return("http://" + document.location.host + "/docschedule/api/v1/dailyschedule?startdate="
+    return("http://" + document.location.host + jspCtx + "/api/v1/dailyschedule?startdate="
           + startDate + "&enddate=" + endDate);
 }
 
