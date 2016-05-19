@@ -9,8 +9,8 @@
 
 package com.docschedule.services;
 
-import com.coderapids.docsched.domain.DailySchedule;
-import com.coderapids.docsched.domain.PhysicianInfo;
+import com.docschedule.domain.DailySchedule;
+import com.docschedule.domain.PhysicianInfo;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
