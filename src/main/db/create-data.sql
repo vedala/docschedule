@@ -42,7 +42,8 @@ insert into sides(side_id, side_name, start_date)
 values (2, 'Side B', '2015-08-11');
 
 
--- password is secret99
+-- password is secret99, encoded in SHA256
+
 insert into users(userid, username, password)
 values
 	(1, "appuser99", "2550cd7fef492d4110956ffffb48210d8fd05f3854758f8883c640dca6999972");
