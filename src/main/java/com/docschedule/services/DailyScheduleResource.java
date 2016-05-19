@@ -7,7 +7,7 @@
  *
  */ 
 
-package com.coderapids.docsched.services;
+package com.docschedule.services;
 
 import com.coderapids.docsched.domain.DailySchedule;
 import com.coderapids.docsched.domain.PhysicianInfo;

@@ -1,4 +1,4 @@
-package com.coderapids.docsched.domain;
+package com.docschedule.domain;
 
 import java.util.ArrayList;
 

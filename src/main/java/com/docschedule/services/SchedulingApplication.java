@@ -1,4 +1,4 @@
-package com.coderapids.docsched.services;
+package com.docschedule.services;
 
 import javax.ws.rs.core.Application;
 import javax.ws.rs.ApplicationPath;

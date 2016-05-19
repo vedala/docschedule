@@ -1,4 +1,4 @@
-package com.coderapids.docsched.domain;
+package com.docschedule.domain;
 
 public class PhysicianInfo {
 	private String	lastName;
