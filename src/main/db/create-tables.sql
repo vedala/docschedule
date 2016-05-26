@@ -38,7 +38,9 @@ create table sides (
 
 
 create table users (
-	userid		int(10),
+	userid		int(10) not null auto_increment,
 	username	varchar(100),
 	password	varchar(100)
 );
+
+alter table users auto_increment=1;
