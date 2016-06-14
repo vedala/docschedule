@@ -67,11 +67,7 @@ public class SignupUser extends HttpServlet {
             throw new RuntimeException("SHA-256 is not available", e);
         }
 
-        try {
-            String url = "/signup_message.html";
-            request.getRequestDispatcher(url).forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        }
+        response.sendRedirect("signup_message.html");
+
     }
 }
