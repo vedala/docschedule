@@ -32,6 +32,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.Properties;
 
+import com.docschedule.util.SendMessage;
+
 public class SignupUser extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -80,36 +82,62 @@ public class SignupUser extends HttpServlet {
         System.out.println("getrequest uri = " + request.getRequestURI());
         System.out.println("getrequest url = " + request.getRequestURL());
         System.out.println("getservlet path = " + request.getServletPath());
+        System.out.println("getserver name  = " + request.getServerName());
+        System.out.println("getserver port  = " + request.getServerPort());
+        System.out.println("context path= " + getServletContext().getContextPath());
 
         // read properties file
         // get host, port, userEmail, refreshToken
 
-        //String file = "/WEB-INF/email.properties";
-        // ServletContext servContext = getServletContext();
-
-        String path = getServletContext().getRealPath("/WEB-INF/classes");
         Properties properties = new Properties();
+
+        InputStream inputStream = null;
+        String host = null;
+        int port = -1;
+        String userEmail = null;
+        String refreshToken = null;
+        String clientId = null;
+        String clientSecret = null;
         try {
-            String file = path + "/" + "email.properties";
-System.out.println("file-name="+file);
-            InputStream is = new FileInputStream(file);
-            properties.load(is);
-            System.out.println(properties.getProperty("host"));
-            System.out.println(properties.getProperty("port"));
-            System.out.println(properties.getProperty("userEmail"));
-            System.out.println(properties.getProperty("refreshToken"));
+            String file = "/WEB-INF/classes/email.properties";
+            inputStream =
+                 getServletContext().getResourceAsStream("/WEB-INF/classes/email.properties");
+            properties.load(inputStream);
+            host = properties.getProperty("host");
+            port = Integer.parseInt(properties.getProperty("port"));
+            userEmail = properties.getProperty("userEmail");
+            refreshToken = properties.getProperty("refreshToken");
+            clientId = properties.getProperty("clientId");
+            clientSecret = properties.getProperty("clientSecret");
+            System.out.println("host="+host);
+            System.out.println("port="+port);
+            System.out.println("userEmail="+userEmail);
+            System.out.println("refreshToken="+refreshToken);
+            System.out.println("clientId="+clientId);
+            System.out.println("clientSecret="+clientSecret);
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
         }
 
 
         // sendMessage
-/*
         SendMessage sm = new SendMessage();
+        StringBuilder verifyURL = new StringBuilder();
+        verifyURL.append(request.getScheme()).append("://").append(request.getServerName());
+        int serverPort = request.getServerPort();
+        if (serverPort != 80 && serverPort != 443) {
+            verifyURL.append(":").append(serverPort);
+        }
+
+        verifyURL.append("/").append("VerifyEmail").append("/").append(uuidString);
         String message = "Click on the link below to activate your account:\n\n"
-                         + 
-        sm.sendMessage(host, port, userEmail, toEmail, oauthToken, username, message)
-*/
+                         + verifyURL.toString();
+        sm.sendMessage(host, port, userEmail, toEmail, refreshToken,
+                                                clientId, clientSecret, username, message);
 
         response.sendRedirect("signup_message.html");
 
