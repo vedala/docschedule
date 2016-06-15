@@ -7,3 +7,4 @@ utilities
 /target
 /src/main/db/create-user.sql
 /src/main/webapp/META-INF
+/src/main/resources/email.properties
