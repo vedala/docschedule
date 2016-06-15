@@ -78,16 +78,7 @@ public class SignupUser extends HttpServlet {
 
         String uuidString = uuid.toString();
 
-        System.out.println("uuid string="+uuidString);
-        System.out.println("getrequest uri = " + request.getRequestURI());
-        System.out.println("getrequest url = " + request.getRequestURL());
-        System.out.println("getservlet path = " + request.getServletPath());
-        System.out.println("getserver name  = " + request.getServerName());
-        System.out.println("getserver port  = " + request.getServerPort());
-        System.out.println("context path= " + getServletContext().getContextPath());
-
-        // read properties file
-        // get host, port, userEmail, refreshToken
+        // Read properties file
 
         Properties properties = new Properties();
 
@@ -98,6 +89,7 @@ public class SignupUser extends HttpServlet {
         String refreshToken = null;
         String clientId = null;
         String clientSecret = null;
+
         try {
             String file = "/WEB-INF/classes/email.properties";
             inputStream =
@@ -109,12 +101,6 @@ public class SignupUser extends HttpServlet {
             refreshToken = properties.getProperty("refreshToken");
             clientId = properties.getProperty("clientId");
             clientSecret = properties.getProperty("clientSecret");
-            System.out.println("host="+host);
-            System.out.println("port="+port);
-            System.out.println("userEmail="+userEmail);
-            System.out.println("refreshToken="+refreshToken);
-            System.out.println("clientId="+clientId);
-            System.out.println("clientSecret="+clientSecret);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -124,7 +110,8 @@ public class SignupUser extends HttpServlet {
         }
 
 
-        // sendMessage
+        // Send message
+
         SendMessage sm = new SendMessage();
         StringBuilder verifyURL = new StringBuilder();
         verifyURL.append(request.getScheme()).append("://").append(request.getServerName());
