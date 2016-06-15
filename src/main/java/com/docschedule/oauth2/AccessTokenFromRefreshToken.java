@@ -16,7 +16,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class AccessTokenFromRefreshToken {
 
-    public static String getAccessToken() {
+    public static String getAccessToken(String refreshToken, String clientId, String clientSecret) {
 
         HttpURLConnection conn = null;
         String accessToken = null;
@@ -26,9 +26,9 @@ public class AccessTokenFromRefreshToken {
             URL url = new URL("https://accounts.google.com/o/oauth2/token");
      
             Map<String,Object> params = new LinkedHashMap<>();
-            params.put("client_id", "----client_id----");
-            params.put("client_secret", "----client_secret----");
-            params.put("refresh_token", "----refresh_token----");
+            params.put("client_id", clientId);
+            params.put("client_secret", clientSecret);
+            params.put("refresh_token", refreshToken);
             params.put("grant_type", "refresh_token");
 
             StringBuilder postData = new StringBuilder();
