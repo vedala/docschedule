@@ -34,7 +34,7 @@ public class SendMessage {
             super("Google OAuth2 Provider", 1.0,
                   "Provides the XOAUTH2 SASL Mechanism");
             put("SaslClientFactory.XOAUTH2",
-                    "com.coderapids.oauth2.OAuth2SaslClientFactory");
+                    "com.docschedule.oauth2.OAuth2SaslClientFactory");
         }
     }
 
@@ -59,7 +59,8 @@ public class SendMessage {
     }
 
     public void sendMessage(String host, int port, String userEmail, String toEmail,
-                            String oauthToken, String name, String body)
+                            String refreshToken, String clientId, String clientSecret,
+                            String name, String body)
     {
 
         try {
@@ -69,7 +70,8 @@ public class SendMessage {
 
             initialize();
 
-            oauthToken = AccessTokenFromRefreshToken.getAccessToken();
+            String oauthToken = AccessTokenFromRefreshToken.getAccessToken(
+                                            refreshToken, clientId, clientSecret);
             Properties props = new Properties();
             props.put("mail.smtp.starttls.enable", "true");
             props.put("mail.smtp.starttls.required", "true");
@@ -85,7 +87,7 @@ public class SendMessage {
 
             Message message = new MimeMessage(session);
             message.setSubject("Activate your DocSchedule account");
-            message.setText("Dear " + name + "\n\n" + body);
+            message.setText("Dear " + name + ",\n\n" + body);
 
             Address toAddress = new InternetAddress(toEmail);
             message.setRecipient(Message.RecipientType.TO, toAddress);
