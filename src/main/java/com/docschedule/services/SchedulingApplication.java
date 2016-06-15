@@ -12,6 +12,7 @@ public class SchedulingApplication extends Application {
 
 	public SchedulingApplication() {
 		singletons.add(new DailyScheduleResource());
+		singletons.add(new VerifyEmailResource());
 	}
 
 	@Override

@@ -117,12 +117,18 @@ public class SignupUser extends HttpServlet {
         SendMessage sm = new SendMessage();
         StringBuilder verifyURL = new StringBuilder();
         verifyURL.append(request.getScheme()).append("://").append(request.getServerName());
+
         int serverPort = request.getServerPort();
         if (serverPort != 80 && serverPort != 443) {
             verifyURL.append(":").append(serverPort);
         }
 
-        verifyURL.append("/").append("VerifyEmail").append("/").append(uuidString);
+        String contextPath = request.getContextPath();
+        if (!contextPath.equals("")) {
+            verifyURL.append(contextPath);
+        }
+
+        verifyURL.append("/api/v1/").append("VerifyEmail").append("/").append(uuidString);
         String message = "Click on the link below to activate your account:\n\n"
                          + verifyURL.toString();
         sm.sendMessage(host, port, userEmail, toEmail, refreshToken,
