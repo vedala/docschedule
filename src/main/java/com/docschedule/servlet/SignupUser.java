@@ -54,6 +54,9 @@ public class SignupUser extends HttpServlet {
             e.printStackTrace();
         }
 
+        UUID uuid = UUID.randomUUID();
+        String uuidString = uuid.toString();
+
         try {
             connection = dataSource.getConnection();
 
@@ -61,11 +64,14 @@ public class SignupUser extends HttpServlet {
             byte hashedBytes[] = digest.digest(password.getBytes(StandardCharsets.UTF_8));
             String passwordHash = Hex.encodeHexString(hashedBytes);
 
-            String sqlString = "insert into users (username, password) values (?, ?)";
+            String sqlString =   "insert into users (username, password, email, token) "
+                               + "values (?, ?, ?, ?)";
 
             preparedStatement = connection.prepareStatement(sqlString);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, passwordHash);
+            preparedStatement.setString(3, toEmail);
+            preparedStatement.setString(4, uuidString);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -73,10 +79,6 @@ public class SignupUser extends HttpServlet {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("SHA-256 is not available", e);
         }
-
-        UUID uuid = UUID.randomUUID();
-
-        String uuidString = uuid.toString();
 
         // Read properties file
 
