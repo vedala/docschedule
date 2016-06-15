@@ -42,6 +42,8 @@ create table users (
 	username	varchar(100),
 	password	varchar(100),
     verified    tinyint default 0,
+    email       varchar(100),
+    token       varchar(100),
     primary key (userid)
 );
 
