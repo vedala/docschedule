@@ -39,38 +39,7 @@
 </head>
 <body>
 	<div id="fulldiv">
-		<div id="header">
-		<table>
-			<tr>
-				<td id="logo" valign="top" width="60%">
-				DocSchedule
-				</td>
-				<td width="20%">
-				</td>
-				<td width="20%">
-				</td>
-			</tr>
-			<tr>
-				<td>
-				</td>
-				<td>
-				</td>
-				<td id="userdisp">
-					<shiro:user>User: <shiro:principal /></shiro:user>
-				</td>
-			</tr>
-			<tr>
-				<td>
-				</td>
-				<td>
-					<shiro:user><a href="<c:url value='/appmain.html' />">Home</a></shiro:user>
-				</td>
-				<td id="loginoutlink">
-					<shiro:user><a href="<c:url value='/logout' />">Logout</a></shiro:user>
-				</td>
-			</tr>
-		</table>
-		</div>
+        <jsp:include page="../includes/header.html" />
 		<div id="mainbody">
 		<div id="maintable">Schedule will be displayed here</div>
         <script>var jspCtx = "${pageContext.request.contextPath}"</script>
