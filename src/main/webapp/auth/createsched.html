@@ -14,6 +14,21 @@
 	<div id="fulldiv">
         <jsp:include page="../includes/header.html" />
 		<div id="mainbody">
+            <form action="CreateSched" method="post">
+                <table id="createschedtable">
+                    <tr>
+                        <td>Start Date:</td>
+                        <td><input type="text" name="startdate" maxlength="50" /></td>
+                    </tr>
+                    <tr>
+                        <td>End Date:</td>
+                        <td><input type="text" name="enddate" maxlength="50" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="right"><input type="submit" name="submit" value="Submit" /></td>
+                    </tr>
+                </table>
+            </form>
 		</div>
 	</div>
 </body>
