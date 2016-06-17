@@ -3,15 +3,23 @@
     <div id="header">
     <table>
         <tr>
-            <td id="logo" valign="top" width="60%">
+            <td id="logo" valign="top" width="40%">
             DocSchedule
             </td>
-            <td width="20%">
+            <td width="15%">
             </td>
-            <td width="20%">
+            <td width="15%">
+            </td>
+            <td width="15%">
+            </td>
+            <td width="15%">
             </td>
         </tr>
         <tr>
+            <td>
+            </td>
+            <td>
+            </td>
             <td>
             </td>
             <td>
@@ -21,6 +29,11 @@
             </td>
         </tr>
         <tr>
+            <td>
+            </td>
+            <td>
+                <shiro:user><a href="<c:url value='/auth/createsched.html'/>">Create Schedule</a></shiro:user>
+            </td>
             <td>
                 <shiro:guest><a href="<c:url value='/signup.html' />">Sign Up</a></shiro:guest>
             </td>
