@@ -19,7 +19,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-public class CreateSched extends HttpServlet {
+public class CreateSchedule extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
                                     throws IOException {
