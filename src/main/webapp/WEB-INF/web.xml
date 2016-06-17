@@ -33,9 +33,17 @@
         <servlet-name>Signup</servlet-name>
         <servlet-class>com.docschedule.servlet.SignupUser</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateSched</servlet-name>
+        <servlet-class>com.docschedule.servlet.CreateSched</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateSched</servlet-name>
+        <url-pattern>/CreateSched</url-pattern>
     </servlet-mapping>
 
 	<welcome-file-list>
