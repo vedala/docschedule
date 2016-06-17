@@ -1,15 +1,13 @@
  
 create table schedule (
 	start_date		date not null,
-	end_date		date not null,
-	accepted_yn		char(1) not null
+	end_date		date not null
 );
 
 create table schedule_physicians (
 	schedule_date				date 	not null,
 	physician_id				int(3)	not null,
-	shift_id					int(1)  not null,
-	accepted_yn					char(1)	not null
+	shift_id					int(1)  not null
 );
 
 create table shifts (
