@@ -151,15 +151,16 @@ public class CreateSchedule extends HttpServlet {
                 if (dayOfWeek == Calendar.TUESDAY && dayCount > 1) {
                     week++;
                     currSide = (currSide == 1) ? 2 : 1;
-                }
 
-                // Night order changes once every two weeks
-                if ((week > 1) && (week % 2 == 1)) {
-                    nightOrder++;
-                    if (nightOrder > numPhysiciansPerSide) {
-                        nightOrder = 1;
+                    // Night order changes once every two weeks
+                    if ((week > 1) && (week % 2 == 1)) {
+                        nightOrder++;
+                        if (nightOrder > numPhysiciansPerSide) {
+                            nightOrder = 1;
+                        }
                     }
                 }
+
 System.out.println("daycount="+dayCount+", week="+week+", night="+nightOrder+", currSide="+currSide);
             }
         } catch (SQLException e) {
