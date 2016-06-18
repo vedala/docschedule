@@ -153,7 +153,7 @@ public class CreateSchedule extends HttpServlet {
                     currSide = (currSide == 1) ? 2 : 1;
 
                     // Night order changes once every two weeks
-                    if ((week > 1) && (week % 2 == 1)) {
+                    if ((week > 1) && (week % 4 == 1)) {
                         nightOrder++;
                         if (nightOrder > numPhysiciansPerSide) {
                             nightOrder = 1;
