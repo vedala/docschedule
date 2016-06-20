@@ -2,16 +2,11 @@
 package com.docschedule.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.FileInputStream;
 import java.io.InputStream;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.ServletException;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,7 +14,6 @@ import org.apache.commons.codec.binary.Hex;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -39,7 +33,6 @@ public class SignupUser extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
                                     throws IOException {
         Connection connection = null;
-        Statement statement = null;
         PreparedStatement preparedStatement = null;
         DataSource dataSource = null;
 
