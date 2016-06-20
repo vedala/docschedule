@@ -37,8 +37,6 @@ public class CreateSchedule extends HttpServlet {
         // fetch schedule start date and end dates
         String startDateStr = request.getParameter("startdate");
         String endDateStr   = request.getParameter("enddate");
-        System.out.println("request-startdate="+startDateStr);
-        System.out.println("request-enddate="+endDateStr);
 
         // Fetch side 1 start date
         try {
@@ -60,7 +58,6 @@ public class CreateSchedule extends HttpServlet {
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
             startDateSide1 = resultSet.getDate(1);
-            System.out.println("startDateSide1="+startDateSide1.toString());
 
             // Fetch number of physicians per side
             sqlString = "select count(1) from physicians where side_id = 1";
@@ -68,7 +65,6 @@ public class CreateSchedule extends HttpServlet {
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
             numPhysiciansPerSide = resultSet.getInt(1);
-            System.out.println("numphys-side="+numPhysiciansPerSide);
         } catch (SQLException e) {
             System.out.println("SQL Exception");
             System.out.println("SQLException: " + e.getMessage());
@@ -90,7 +86,6 @@ public class CreateSchedule extends HttpServlet {
 
         int daysBetween = ((int) (startDate.getTime() / (24*60*60*1000)) ) 
                             - ((int) (startDateSide1.getTime() / (24*60*60*1000)));
-        System.out.println("daysbetween="+daysBetween);
 
         int side = -1;
         if ((daysBetween % 14) < 7) {
@@ -99,8 +94,6 @@ public class CreateSchedule extends HttpServlet {
         else {
             side = 2;
         }
-
-        System.out.println("side="+side);
 
         // create schedule records keeping in mind night order
         int nightOrder = 1;
@@ -125,8 +118,8 @@ public class CreateSchedule extends HttpServlet {
                 while (resultSet.next()) {
                     int physicianId = resultSet.getInt(1);
                     int nightOrderSelected = resultSet.getInt(2);
-                    System.out.println("physicianId="+physicianId+ ", nightOrderSel="+nightOrderSelected);
                     int shiftIdToInsert = 1;
+
                     if (nightOrderSelected == nightOrder) {
                         shiftIdToInsert = 2;
                     }
@@ -160,8 +153,6 @@ public class CreateSchedule extends HttpServlet {
                         }
                     }
                 }
-
-System.out.println("daycount="+dayCount+", week="+week+", night="+nightOrder+", currSide="+currSide);
             }
         } catch (SQLException e) {
             System.out.println("SQL Exception");
