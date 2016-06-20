@@ -167,5 +167,8 @@ public class CreateSchedule extends HttpServlet {
                 System.out.println("SQLException: " + e.getMessage());
             }
         }
+
+        response.sendRedirect("create_success.html");
+
     }
 }
