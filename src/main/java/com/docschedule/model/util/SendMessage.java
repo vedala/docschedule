@@ -1,4 +1,4 @@
-package com.docschedule.util;
+package com.docschedule.model.util;
 
 import java.io.IOException;
 
@@ -19,8 +19,8 @@ import java.security.Security;
 
 import com.sun.mail.smtp.SMTPTransport;
 
-import com.docschedule.oauth2.AccessTokenFromRefreshToken;
-import com.docschedule.oauth2.OAuth2SaslClientFactory;
+import com.docschedule.model.util.AccessTokenFromRefreshToken;
+import com.docschedule.model.util.OAuth2SaslClientFactory;
 
 public class SendMessage {
 
@@ -34,7 +34,7 @@ public class SendMessage {
             super("Google OAuth2 Provider", 1.0,
                   "Provides the XOAUTH2 SASL Mechanism");
             put("SaslClientFactory.XOAUTH2",
-                    "com.docschedule.oauth2.OAuth2SaslClientFactory");
+                    "com.docschedule.model.util.OAuth2SaslClientFactory");
         }
     }
 

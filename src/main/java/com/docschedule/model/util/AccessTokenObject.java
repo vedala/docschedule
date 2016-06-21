@@ -1,4 +1,4 @@
-package com.docschedule.oauth2;
+package com.docschedule.model.util;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

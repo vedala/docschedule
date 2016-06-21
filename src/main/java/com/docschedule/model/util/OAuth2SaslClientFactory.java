@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.docschedule.oauth2;
+package com.docschedule.model.util;
  
 import java.util.Map;
 

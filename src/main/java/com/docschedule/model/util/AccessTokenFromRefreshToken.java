@@ -1,4 +1,4 @@
-package com.docschedule.oauth2;
+package com.docschedule.model.util;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
