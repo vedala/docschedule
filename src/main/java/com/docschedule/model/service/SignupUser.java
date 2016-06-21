@@ -1,77 +1,42 @@
 
-package com.docschedule.servlet;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import org.apache.commons.codec.binary.Hex;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+package com.docschedule.model.service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.Properties;
 
+import java.io.InputStream;
+import java.io.IOException;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import org.apache.commons.codec.binary.Hex;
+
 import com.docschedule.util.SendMessage;
+import com.docschedule.model.dao.UserDAO;
 
-public class SignupUser extends HttpServlet {
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-                                    throws IOException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        DataSource dataSource = null;
+public class SignupUser {
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String toEmail = request.getParameter("email");
-
-        try {
-            Context context = new InitialContext();
-            dataSource = (DataSource) context.lookup("java:comp/env/jdbc/docschedDB");
-        } catch (NamingException e) {
-            e.printStackTrace();
-        }
+    public static void addNewUser(String username, String password, String toEmail,
+                              ServletContext servletContext, HttpServletRequest request) {
 
         UUID uuid = UUID.randomUUID();
         String uuidString = uuid.toString();
+        String passwordHash = null;
 
         try {
-            connection = dataSource.getConnection();
-
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte hashedBytes[] = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-            String passwordHash = Hex.encodeHexString(hashedBytes);
-
-            String sqlString =   "insert into users (username, password, email, token) "
-                               + "values (?, ?, ?, ?)";
-
-            preparedStatement = connection.prepareStatement(sqlString);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, passwordHash);
-            preparedStatement.setString(3, toEmail);
-            preparedStatement.setString(4, uuidString);
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            passwordHash = Hex.encodeHexString(hashedBytes);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("SHA-256 is not available", e);
         }
+
+        UserDAO.addUser(username, passwordHash, toEmail, uuidString);
 
         // Read properties file
 
@@ -88,7 +53,7 @@ public class SignupUser extends HttpServlet {
         try {
             String file = "/WEB-INF/classes/email.properties";
             inputStream =
-                 getServletContext().getResourceAsStream("/WEB-INF/classes/email.properties");
+                 servletContext.getResourceAsStream("/WEB-INF/classes/email.properties");
             properties.load(inputStream);
             host = properties.getProperty("host");
             port = Integer.parseInt(properties.getProperty("port"));
@@ -99,11 +64,14 @@ public class SignupUser extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (inputStream != null) {
-                inputStream.close();
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                    e.printStackTrace();
             }
         }
-
 
         // Send message
 
@@ -126,8 +94,5 @@ public class SignupUser extends HttpServlet {
                          + verifyURL.toString();
         sm.sendMessage(host, port, userEmail, toEmail, refreshToken,
                                                 clientId, clientSecret, username, message);
-
-        response.sendRedirect("signup_message.html");
-
     }
 }
