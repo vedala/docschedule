@@ -1,4 +1,4 @@
-package com.docschedule.domain;
+package com.docschedule.model.domain;
 
 public class PhysicianInfo {
 	private String	lastName;

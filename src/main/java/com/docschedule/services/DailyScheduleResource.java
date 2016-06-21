@@ -9,8 +9,8 @@
 
 package com.docschedule.services;
 
-import com.docschedule.domain.DailySchedule;
-import com.docschedule.domain.PhysicianInfo;
+import com.docschedule.model.domain.DailySchedule;
+import com.docschedule.model.domain.PhysicianInfo;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
