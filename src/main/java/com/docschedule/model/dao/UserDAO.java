@@ -37,4 +37,32 @@ public class UserDAO {
         }
 
     }
+
+    public static void updateUserVerified(String token) {
+
+        Connection connection = null;
+        DataSource ds = AppDataSource.getDataSource();
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = ds.getConnection();
+
+            String sqlString =   "update users set verified = 1 where token = ?";
+
+            preparedStatement = connection.prepareStatement(sqlString);
+            preparedStatement.setString(1, token);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("SQL Exception-close");
+                System.out.println("SQLException: " + e.getMessage());
+            }
+        }
+
+    }
 }
