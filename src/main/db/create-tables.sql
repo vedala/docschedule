@@ -1,10 +1,5 @@
  
 create table schedule (
-	start_date		date not null,
-	end_date		date not null
-);
-
-create table schedule_physicians (
 	schedule_date				date 	not null,
 	physician_id				int(3)	not null,
 	shift_id					int(1)  not null

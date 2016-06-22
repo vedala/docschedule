@@ -106,7 +106,7 @@ public class CreateSchedule extends HttpServlet {
             connection = dataSource.getConnection();
 
             String selectString = "select physician_id, night_order from physicians where side_id = ?";
-            String insertString = "insert into schedule_physicians(schedule_date, physician_id, shift_id) "
+            String insertString = "insert into schedule(schedule_date, physician_id, shift_id) "
                                   + "values (?, ?, ?)";
             PreparedStatement stmtSelectPhys = connection.prepareStatement(selectString);
             PreparedStatement stmtInsertSchedPhys = connection.prepareStatement(insertString);

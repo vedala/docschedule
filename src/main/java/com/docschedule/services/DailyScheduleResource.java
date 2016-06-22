@@ -73,7 +73,7 @@ public class DailyScheduleResource {
 			sqlString =
 				"select date_format(a.schedule_date, '%Y-%m-%d') sched_date, "
 				+ "b.last_name PHYS_LAST, c.shortname SHIFT_SN "
-				+ "from schedule_physicians a "
+				+ "from schedule a "
 				+ "inner join physicians as b on a.physician_id = b.physician_id "
 				+ "inner join shifts as c on a.shift_id = c.shift_id "
 				+ "where a.schedule_date >= ? "
