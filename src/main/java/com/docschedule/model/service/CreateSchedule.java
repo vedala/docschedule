@@ -73,7 +73,7 @@ public class CreateSchedule {
                 week++;
                 currSide = (currSide == 1) ? 2 : 1;
 
-                // Night order changes once every two weeks
+                // Night order changes once every four weeks
                 if ((week > 1) && (week % 4 == 1)) {
                     nightOrder++;
                     if (nightOrder > numPhysiciansPerSide) {
