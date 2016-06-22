@@ -65,9 +65,6 @@ public class SendMessage {
 
         try {
 
-            // String host = "smtp.gmail.com";
-            // int    port = 587;
-
             initialize();
 
             String oauthToken = AccessTokenFromRefreshToken.getAccessToken(
