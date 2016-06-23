@@ -7,22 +7,22 @@ import java.util.Set;
 
 @ApplicationPath("api")
 public class SchedulingApplication extends Application {
-	private Set<Object> singletons = new HashSet<Object>();
-	private Set<Class<?>> empty = new HashSet<Class<?>>();
+    private Set<Object> singletons = new HashSet<Object>();
+    private Set<Class<?>> empty = new HashSet<Class<?>>();
 
-	public SchedulingApplication() {
-		singletons.add(new DateRangeScheduleResource());
-		singletons.add(new OneDayScheduleResource());
-		singletons.add(new VerifyEmailResource());
-	}
+    public SchedulingApplication() {
+        singletons.add(new DateRangeScheduleResource());
+        singletons.add(new OneDayScheduleResource());
+        singletons.add(new VerifyEmailResource());
+    }
 
-	@Override
-	public Set<Class<?>> getClasses() {
-		return empty;
-	}
+    @Override
+    public Set<Class<?>> getClasses() {
+        return empty;
+    }
 
-	@Override
-	public Set<Object> getSingletons() {
-		return singletons;
-	}
+    @Override
+    public Set<Object> getSingletons() {
+        return singletons;
+    }
 }
