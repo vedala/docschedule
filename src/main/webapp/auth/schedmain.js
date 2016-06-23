@@ -27,7 +27,7 @@ dateObj.setMinutes(0);
 dateObj.setSeconds(0);
 var dayOfWeek = dateObj.getDay();
 if (dayOfWeek != 0) {
-	dateObj.setDate(dateObj.getDate() - dayOfWeek);
+    dateObj.setDate(dateObj.getDate() - dayOfWeek);
 }
 
 var startDates = [];
@@ -47,121 +47,121 @@ var myUrl;
 var deferreds = getDisplayData();
 
 $.when.apply(null, deferreds).done(function() {
-	schedHtml = '<table class="outermosttab">';
+    schedHtml = '<table class="outermosttab">';
 
-	schedHtml += displayTableHeading();
-	for (var i = 0; i < weeksToDisplay; i++) {
-		schedHtml += '<tr>';
-		schedHtml += displayWeek[i];
-		schedHtml += '</tr>';
-	}
-	schedHtml += '</table>';
-	$("#maintable").html(schedHtml);
-	document.close();
+    schedHtml += displayTableHeading();
+    for (var i = 0; i < weeksToDisplay; i++) {
+        schedHtml += '<tr>';
+        schedHtml += displayWeek[i];
+        schedHtml += '</tr>';
+    }
+    schedHtml += '</table>';
+    $("#maintable").html(schedHtml);
+    document.close();
 });
 
 function getDisplayData() {
-	var deferreds = [];
+    var deferreds = [];
 
-	for (var i = 0; i < weeksToDisplay; i++) {
-		myUrl = constructURL(startDates[i], endDates[i]);
-		(function(i) {
-			deferreds.push($.ajax({
-				url		: myUrl,
-				type	: 'GET',
-				success	: function(response) {
-					displayWeek[i] = weeklySchedToHtml(response);
-				}
-			}));
-		})(i);
-	}
+    for (var i = 0; i < weeksToDisplay; i++) {
+        myUrl = constructURL(startDates[i], endDates[i]);
+        (function(i) {
+            deferreds.push($.ajax({
+                url        : myUrl,
+                type    : 'GET',
+                success    : function(response) {
+                    displayWeek[i] = weeklySchedToHtml(response);
+                }
+            }));
+        })(i);
+    }
 
-	return deferreds;
+    return deferreds;
 }
 
 function weeklySchedToHtml(weekSched)
 {
-	var schedString = '';
-	var i, j;
-	var monthNum1;
-	var monthNum2;
+    var schedString = '';
+    var i, j;
+    var monthNum1;
+    var monthNum2;
 
-	var month1Num = -1
-	var month2Num = -1;
-	var month1Str = null;
-	var month2Str = null;
-	
-	//
-	// First column displays short month name. If a row consists of days
-	// from two separate months, then month name is displayed as "Sep / Oct"
-	//
-	for (i = 0; i < weekSched.length; i++)
-	{
-		var dateStr = weekSched[i].scheduleDate;
-		var dateObj2 = new Date(Date.parse(dateStr.substr(5,2) + "/" + dateStr.substr(8,2) + "/" + dateStr.substr(0,4)));
+    var month1Num = -1
+    var month2Num = -1;
+    var month1Str = null;
+    var month2Str = null;
+    
+    //
+    // First column displays short month name. If a row consists of days
+    // from two separate months, then month name is displayed as "Sep / Oct"
+    //
+    for (i = 0; i < weekSched.length; i++)
+    {
+        var dateStr = weekSched[i].scheduleDate;
+        var dateObj2 = new Date(Date.parse(dateStr.substr(5,2) + "/" + dateStr.substr(8,2) + "/" + dateStr.substr(0,4)));
 
-		if (month1Num == -1)
-		{
-			month1Num = dateObj2.getMonth();
-			month1Str = monthToStringShort(month1Num);
-		}
-		else if (month2Num == -1)
-		{
-			if (month1Num != dateObj2.getMonth())
-			{
-				month2Num = dateObj2.getMonth();
-				month2Str = monthToStringShort(month2Num);
-			}
-		}
-	}
+        if (month1Num == -1)
+        {
+            month1Num = dateObj2.getMonth();
+            month1Str = monthToStringShort(month1Num);
+        }
+        else if (month2Num == -1)
+        {
+            if (month1Num != dateObj2.getMonth())
+            {
+                month2Num = dateObj2.getMonth();
+                month2Str = monthToStringShort(month2Num);
+            }
+        }
+    }
 
-	var monthStr;
-	if (month2Num == -1)
-	{
-		monthStr = month1Str;
-	}
-	else
-	{
-		monthStr = month1Str + " / " + month2Str;
-	}
+    var monthStr;
+    if (month2Num == -1)
+    {
+        monthStr = month1Str;
+    }
+    else
+    {
+        monthStr = month1Str + " / " + month2Str;
+    }
 
-	schedString += '<td class="monthcolcell">'
-				+ monthStr
-				+ '</td>';
+    schedString += '<td class="monthcolcell">'
+                + monthStr
+                + '</td>';
 
-	for (i = 0; i < weekSched.length; i++)
-	{
-		var dateStr = weekSched[i].scheduleDate;
-		var dateObj2 = new Date(Date.parse(dateStr.substr(5,2) + "/" + dateStr.substr(8,2) + "/" + dateStr.substr(0,4)));
+    for (i = 0; i < weekSched.length; i++)
+    {
+        var dateStr = weekSched[i].scheduleDate;
+        var dateObj2 = new Date(Date.parse(dateStr.substr(5,2) + "/" + dateStr.substr(8,2) + "/" + dateStr.substr(0,4)));
 
-		schedString += '<td class="onedaycell">'
-				+ '<table class="datedaytab">'
-				+ '<tr>'
-				+ '<td class="dateonly">'
-				+ dateStr.substr(8,2)
-				+ '</td>'
-				+ '</tr>'
-				+ '</table>'
-				+ '<table class="doclisttab">';
-				
-		for (j = 0; j < weekSched[i].physicianInfoArray.length; j++)
-		{
-			schedString += '<tr>'
-						+ '<td>'
-						+ weekSched[i].physicianInfoArray[j].lastName
-						+ '</td>'
-						+ '<td>'
-						+ weekSched[i].physicianInfoArray[j].shiftShortname
-						+ '</td>'
-						+ '</tr>';
-		}
-		
-		schedString += '</table>'
-						+ '</td>';
-	
-	}
+        schedString += '<td class="onedaycell">'
+                + '<table class="datedaytab">'
+                + '<tr>'
+                + '<td class="dateonly">'
+                + dateStr.substr(8,2)
+                + '</td>'
+                + '</tr>'
+                + '</table>'
+                + '<table class="doclisttab">';
+                
+        for (j = 0; j < weekSched[i].physicianInfoArray.length; j++)
+        {
+            schedString += '<tr>'
+                        + '<td>'
+                        + weekSched[i].physicianInfoArray[j].lastName
+                        + '</td>'
+                        + '<td>'
+                        + weekSched[i].physicianInfoArray[j].shiftShortname
+                        + '</td>'
+                        + '</tr>';
+        }
+        
+        schedString += '</table>'
+                        + '</td>';
+    
+    }
 
-	return(schedString);
+    return(schedString);
 }
 
 function constructURL(startDate, endDate)
@@ -173,45 +173,45 @@ function constructURL(startDate, endDate)
 
 function displayTableHeading()
 {
-	var htmlString;
+    var htmlString;
 
-	htmlString = '<tr id="toprow">';
-	htmlString += '<td>'
-				+ '</td>';
+    htmlString = '<tr id="toprow">';
+    htmlString += '<td>'
+                + '</td>';
 
-	for (i = 0; i < 7; i++) {
-		htmlString += '<th>'
-					+ dayOfWeekString(i)
-					+ '</th>';
-	}
-	htmlString += '</tr>';
-	return htmlString;
+    for (i = 0; i < 7; i++) {
+        htmlString += '<th>'
+                    + dayOfWeekString(i)
+                    + '</th>';
+    }
+    htmlString += '</tr>';
+    return htmlString;
 }
 
 
 function populateStartEndDates(startDates, endDates, dateObj)
 {
-	var i;
-	for (i = 0; i < weeksToDisplay; i++)
-	{
-		startDates.push(dateObj.toISOString().substr(0, 10));
-		dateObj.setDate(dateObj.getDate() + 6);
-		endDates.push(dateObj.toISOString().substr(0, 10));
-		dateObj.setDate(dateObj.getDate() + 1);
-	}
+    var i;
+    for (i = 0; i < weeksToDisplay; i++)
+    {
+        startDates.push(dateObj.toISOString().substr(0, 10));
+        dateObj.setDate(dateObj.getDate() + 6);
+        endDates.push(dateObj.toISOString().substr(0, 10));
+        dateObj.setDate(dateObj.getDate() + 1);
+    }
 }
 
 function dayOfWeekString(dayOfWeek)
 {
-	var dayOfWeekWords = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-	
-	return dayOfWeekWords[dayOfWeek];
+    var dayOfWeekWords = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    
+    return dayOfWeekWords[dayOfWeek];
 }
 
 function monthToStringShort(monthNum)
 {
-	var monthInWords = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
-						'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	
-	return monthInWords[monthNum];
+    var monthInWords = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
+                        'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+    return monthInWords[monthNum];
 }
