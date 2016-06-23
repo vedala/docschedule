@@ -34,15 +34,15 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 
-@Path("/v1/dailyschedule")
-public class DailyScheduleResource {
+@Path("/v1/rangeschedule")
+public class DateRangeScheduleResource {
 	private Connection connect = null;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 	private DataSource dataSource;
 
-	public DailyScheduleResource() {
+	public DateRangeScheduleResource() {
 		try {
 			Context context = new InitialContext();
 			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/docschedDB");
@@ -53,7 +53,7 @@ public class DailyScheduleResource {
 
 	@GET
 	@Produces("application/json")
-	public String getDailySchedule(@QueryParam("startdate") String startDate,
+	public String getDateRangeSchedule(@QueryParam("startdate") String startDate,
 								   @QueryParam("enddate") String endDate) {
 
 
