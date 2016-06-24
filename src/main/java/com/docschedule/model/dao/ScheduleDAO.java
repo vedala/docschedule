@@ -35,6 +35,13 @@ public class ScheduleDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("SQL Exception-close");
+                System.out.println("SQLException: " + e.getMessage());
+            }
         }
     }
 }
