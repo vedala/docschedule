@@ -72,13 +72,13 @@ public class DateRangeScheduleResource {
     
     		sqlString =
     			"select date_format(a.schedule_date, '%Y-%m-%d') sched_date, "
-    			+ "b.last_name PHYS_LAST, c.shortname SHIFT_SN "
+    			+ "b.last_name PHYS_LAST, b.first_name PHYS_FIRST, c.shortname SHIFT_SN "
     			+ "from schedule a "
     			+ "inner join physicians as b on a.physician_id = b.physician_id "
     			+ "inner join shifts as c on a.shift_id = c.shift_id "
     			+ "where a.schedule_date >= ? "
     			+ "and a.schedule_date <= ? "
-    			+ "order by a.schedule_date, b.last_name, a.shift_id";
+    			+ "order by a.schedule_date, b.last_name, b.first_name, a.shift_id";
 
     		preparedStatement = connect.prepareStatement(sqlString);
     		preparedStatement.setString(1, startDate);
@@ -99,6 +99,7 @@ public class DateRangeScheduleResource {
     				physicianInfoArray = new ArrayList<PhysicianInfo>();
     			}
     			physicianInfoItem = new PhysicianInfo();
+    			physicianInfoItem.setFirstName(resultSet.getString("PHYS_FIRST"));
     			physicianInfoItem.setLastName(resultSet.getString("PHYS_LAST"));
     			physicianInfoItem.setShiftShortname(resultSet.getString("SHIFT_SN"));
     			physicianInfoArray.add(physicianInfoItem);

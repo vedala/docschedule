@@ -149,6 +149,8 @@ function weeklySchedToHtml(weekSched)
             schedString += '<tr>'
                         + '<td>'
                         + weekSched[i].physicianInfoArray[j].lastName
+                        + ', '
+                        + weekSched[i].physicianInfoArray[j].firstName
                         + '</td>'
                         + '<td>'
                         + weekSched[i].physicianInfoArray[j].shiftShortname
