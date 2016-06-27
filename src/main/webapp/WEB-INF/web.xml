@@ -37,6 +37,10 @@
         <servlet-name>CreateSched</servlet-name>
         <servlet-class>com.docschedule.controller.CreateScheduleController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewSchedule</servlet-name>
+        <servlet-class>com.docschedule.controller.ViewScheduleController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -44,6 +48,10 @@
     <servlet-mapping>
         <servlet-name>CreateSched</servlet-name>
         <url-pattern>/auth/CreateSched</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewSchedule</servlet-name>
+        <url-pattern>/auth/ViewSched</url-pattern>
     </servlet-mapping>
 
 	<welcome-file-list>
