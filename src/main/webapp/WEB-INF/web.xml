@@ -38,7 +38,7 @@
         <servlet-class>com.docschedule.controller.CreateScheduleController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ViewSchedule</servlet-name>
+        <servlet-name>ViewSched</servlet-name>
         <servlet-class>com.docschedule.controller.ViewScheduleController</servlet-class>
     </servlet>
     <servlet-mapping>
@@ -50,7 +50,7 @@
         <url-pattern>/auth/CreateSched</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ViewSchedule</servlet-name>
+        <servlet-name>ViewSched</servlet-name>
         <url-pattern>/auth/ViewSched</url-pattern>
     </servlet-mapping>
 
