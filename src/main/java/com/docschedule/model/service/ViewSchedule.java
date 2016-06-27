@@ -3,20 +3,21 @@ package com.docschedule.model.service;
 
 import java.sql.Date;
 
-import com.docschedule.model.dao.SideDAO;
-import com.docschedule.model.dao.PhysicianDAO;
-import com.docschedule.model.dao.ScheduleDAO;
-import com.docschedule.model.domain.Physician;
+import com.docschedule.model.dao.DailyScheduleDAO;
+import com.docschedule.model.domain.DailySchedule;
 
 import java.util.Calendar;
 import java.util.ArrayList;
+import java.util.List;
 
+import com.docschedule.model.domain.DailySchedule;
+import com.docschedule.model.domain.PhysicianInfo;
 
 public class ViewSchedule {
 
-    public ArrayList<PhysicianInfo> getSchedule(String startDateStr, String endDateStr) {
+    public static List<DailySchedule> getSchedule(String startDate, String endDate) {
 
-        ArrayList<PhysicianInfo> scheduleArr = new ArrayList<PhysicianInfo>();
+        List<DailySchedule> scheduleArr = DailyScheduleDAO.getScheduleByDateRange(startDate, endDate);
 
         return scheduleArr;
     }
