@@ -40,20 +40,37 @@ public class ViewScheduleController extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
                                     throws IOException, ServletException {
 
+        int daysToDisplay = 7;
         String startDate = null;
         HttpSession session = request.getSession();
 
         String isFromGet = (String) request.getAttribute("fromGet");
 
-        if (isFromGet == null) {
-            startDate = request.getParameter("formdate");
-            session.setAttribute("startDate", startDate);
-        }
-        else {
+        if (isFromGet != null) {
+            // Came to this method via GET
             startDate = (String) session.getAttribute("startDate");
         }
+        else {
+            String upButton = (String) request.getParameter("up");
+            String downButton = (String) request.getParameter("down");
+            if (upButton != null) {
+                startDate = (String) session.getAttribute("startDate");
+                LocalDate tempDate = LocalDate.parse(startDate);
+                tempDate = tempDate.minusDays(1);
+                startDate = tempDate.toString();
+            }
+            else if (downButton != null) {
+                startDate = (String) session.getAttribute("startDate");
+                LocalDate tempDate = LocalDate.parse(startDate);
+                tempDate = tempDate.plusDays(1);
+                startDate = tempDate.toString();
+            }
+            else {
+                startDate = request.getParameter("formdate");
+            }
+            session.setAttribute("startDate", startDate);
+        }
 
-        int daysToDisplay = 7;
 
         LocalDate sDate = LocalDate.parse(startDate);
         LocalDate eDate = sDate.plusDays(daysToDisplay-1);
