@@ -9,8 +9,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>DocSchedule Schedule Display</title>
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/common.css' />">
 </head>
 <body>
+ <div id="fulldiv">
+   <jsp:include page="../includes/header.html" />
+   <div id="mainbody">
     <form action="ViewSched" method="post">
         <table>
             <tr>
@@ -23,19 +27,29 @@
 
     <br/>
     <br/>
-    <h3>Schedule</h3>
-    <table>
+    <c:if test="${fn:length(scheduleArr) > 0}">
+      <h3>Schedule</h3>
+      <table border=1>
         <tbody>
         <c:forEach items="${scheduleArr}" var="scheduleItem">
-            <tr>
-                <td><c:out value="${scheduleItem.scheduleDate}"/></td>
-                <c:forEach items="${scheduleItem.physicianInfoArray}" var="pInfo">
-                <td><c:out value="${pInfo.firstName}"/>
-                    <c:out value="${pInfo.lastName}"/> : <c:out value="${pInfo.shiftShortname}"/>; </td>
-                </c:forEach>
-            </tr>
+                <tr>
+                    <td><c:out value="${scheduleItem.scheduleDate}"/></td>
+                    <td>
+                        <table>
+                        <c:forEach items="${scheduleItem.physicianInfoArray}" var="pInfo">
+                        <tr><td>
+                            <c:out value="${pInfo.firstName}"/>
+                            <c:out value="${pInfo.lastName}"/> : <c:out value="${pInfo.shiftShortname}"/>;
+                        </td></tr>
+                        </c:forEach>
+                        </table>
+                    </td>
+                </tr>
         </c:forEach>
         </tbody>
-    </table>
+      </table>
+    </c:if>
+   </div>
+ </div>
 </body>
 </html>
