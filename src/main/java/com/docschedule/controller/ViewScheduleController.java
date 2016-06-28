@@ -53,7 +53,7 @@ public class ViewScheduleController extends HttpServlet {
             startDate = (String) session.getAttribute("startDate");
         }
 
-        int daysToDisplay = 10;
+        int daysToDisplay = 7;
 
         LocalDate sDate = LocalDate.parse(startDate);
         LocalDate eDate = sDate.plusDays(daysToDisplay-1);
