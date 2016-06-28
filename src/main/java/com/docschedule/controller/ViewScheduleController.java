@@ -53,16 +53,15 @@ public class ViewScheduleController extends HttpServlet {
         else {
             String upButton = (String) request.getParameter("up");
             String downButton = (String) request.getParameter("down");
-            if (upButton != null) {
+            if ((upButton != null) || (downButton != null)) {
                 startDate = (String) session.getAttribute("startDate");
                 LocalDate tempDate = LocalDate.parse(startDate);
-                tempDate = tempDate.minusDays(1);
-                startDate = tempDate.toString();
-            }
-            else if (downButton != null) {
-                startDate = (String) session.getAttribute("startDate");
-                LocalDate tempDate = LocalDate.parse(startDate);
-                tempDate = tempDate.plusDays(1);
+                if (upButton != null) {
+                    tempDate = tempDate.minusDays(1);
+                }
+                else {
+                    tempDate = tempDate.plusDays(1);
+                }
                 startDate = tempDate.toString();
             }
             else {
