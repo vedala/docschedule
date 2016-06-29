@@ -44,22 +44,24 @@
 		</div>
 		<div id="mainbody">
 			<form action="Signup" method="post">
+                <div style="color: #FF0000;">${signupErrorMessage}</div>
+                <br/>
 				<table id="signuptable">
 					<tr>
 						<td>Username:</td>
-						<td><input type="text" name="username" maxlength="50" /></td>
+						<td><input type="text" name="username" maxlength="50" value="${param.username}"/></td>
 					</tr>
 					<tr>
 						<td>Password:</td>
-						<td><input type="password" name="password" maxlength="50" /></td>
+						<td><input type="password" name="password" maxlength="50" value="${param.password}"/></td>
 					</tr>
 					<tr>
 						<td>Password Confirm:</td>
-						<td><input type="password" name="confirm" maxlength="50" /></td>
+						<td><input type="password" name="confirm" maxlength="50" value="${param.confirm}"/></td>
 					</tr>
 					<tr>
 						<td>Email:</td>
-						<td><input type="text" name="email" maxlength="50" /></td>
+						<td><input type="text" name="email" maxlength="50" value="${param.email}"/></td>
 					</tr>
 					<tr>
 						<td colspan="2" align="right"><input type="submit" name="submit" value="SignUp" /></td>
