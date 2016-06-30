@@ -44,7 +44,11 @@
 		</div>
 		<div id="mainbody">
 			<form action="Signup" method="post">
-                <div style="color: #FF0000;">${signupErrorMessage}</div>
+                <div style="color: #FF0000;">
+                    <c:forEach items="${signupErrorMessage}" var="errMessage">
+                        ${errMessage}<br />
+                    </c:forEach>
+                </div>
                 <br/>
 				<table id="signuptable">
 					<tr>
