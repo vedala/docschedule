@@ -48,11 +48,11 @@ public class CreateScheduleController extends HttpServlet {
         }
 
         if (errorMessage.size() > 0) {
-            request.getSession().setAttribute("createErrorMessage", errorMessage);
+            request.getSession().setAttribute("createErrorMessages", errorMessage);
             request.getRequestDispatcher("createsched.html").forward(request, response);
         }
         else {
-            request.getSession().removeAttribute("createErrorMessage");
+            request.getSession().removeAttribute("createErrorMessages");
             CreateSchedule.createSchedule(startDate, endDate);
             response.sendRedirect("create_success.html");
         }
