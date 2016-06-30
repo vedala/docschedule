@@ -15,6 +15,12 @@
         <jsp:include page="../includes/header.html" />
         <div id="mainbody">
             <form action="CreateSched" method="post">
+                <div style="color:#FF0000;">
+                    <c:forEach items="${createErrorMessage}" var="errMessage">
+                        ${errMessage}<br />
+                    </c:forEach>
+                    <br />
+                </div>
                 <table id="createschedtable">
                     <tr>
                         <td>Start Date:</td>
