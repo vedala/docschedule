@@ -9,9 +9,10 @@ import javax.servlet.ServletException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import com.docschedule.model.domain.DailySchedule;
 import com.docschedule.model.service.ViewSchedule;
@@ -43,6 +44,7 @@ public class ViewScheduleController extends HttpServlet {
         int daysToDisplay = 7;
         String startDate = null;
         HttpSession session = request.getSession();
+        List<String> errorMessage = new ArrayList<String>();
 
         String isFromGet = (String) request.getAttribute("fromGet");
 
@@ -51,6 +53,7 @@ public class ViewScheduleController extends HttpServlet {
             startDate = (String) session.getAttribute("startDate");
         }
         else {
+            // Came to this method via POST
             String upButton = (String) request.getParameter("up");
             String downButton = (String) request.getParameter("down");
             if ((upButton != null) || (downButton != null)) {
@@ -67,17 +70,34 @@ public class ViewScheduleController extends HttpServlet {
             else {
                 startDate = request.getParameter("formdate");
             }
-            session.setAttribute("startDate", startDate);
+
+            // Validate date entered in form field, if valid save in session
+
+            if (startDate == null || startDate.equals("")) {
+                errorMessage.add("Start date must be entered.");
+            }
+            else {
+                try {
+                    LocalDate.parse(startDate);
+                    session.setAttribute("startDate", startDate);
+                } catch (DateTimeParseException e) {
+                    errorMessage.add("Start date must in format YYYY-MM-DD");
+                }
+            }
         }
 
+        if (errorMessage.size() == 0 && startDate != null) {
+            LocalDate sDate = LocalDate.parse(startDate);
+            LocalDate eDate = sDate.plusDays(daysToDisplay-1);
+            String endDate = eDate.toString();
 
-        LocalDate sDate = LocalDate.parse(startDate);
-        LocalDate eDate = sDate.plusDays(daysToDisplay-1);
-        String endDate = eDate.toString();
+            List<DailySchedule> scheduleArr = ViewSchedule.getSchedule(startDate, endDate);
 
-        List<DailySchedule> scheduleArr = ViewSchedule.getSchedule(startDate, endDate);
-
-        request.setAttribute("scheduleArr", scheduleArr);
+            request.setAttribute("scheduleArr", scheduleArr);
+        }
+        else {
+            request.setAttribute("dispSchedErrorMessages", errorMessage);
+        }
 
         request.getRequestDispatcher("schedmain_new.html").forward(request, response);
     }

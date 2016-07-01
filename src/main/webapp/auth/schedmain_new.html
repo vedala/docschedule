@@ -16,6 +16,12 @@
    <jsp:include page="../includes/header.html" />
    <div id="mainbody">
     <form action="ViewSched" method="post">
+        <div style="color:#FF0000;">
+            <c:forEach items="${dispSchedErrorMessages}" var="errMessage">
+                ${errMessage}<br />
+            </c:forEach>
+            <br />
+        </div>
         <table>
             <tr>
                 <td>Date:</td>
