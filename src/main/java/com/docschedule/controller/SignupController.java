@@ -47,15 +47,11 @@ public class SignupController extends HttpServlet {
         }
 
         if (errorMessage.size() > 0) {
-            request.getSession().setAttribute("signupErrorMessages", errorMessage);
+            request.setAttribute("signupErrorMessages", errorMessage);
             request.getRequestDispatcher("signup.html").forward(request, response);
         }
         else {
-
-            request.getSession().removeAttribute("signupErrorMessages");
-
             SignupUser.addNewUser(username, password, toEmail, getServletContext(), request);
-
             response.sendRedirect("signup_message.html");
         }
     }
