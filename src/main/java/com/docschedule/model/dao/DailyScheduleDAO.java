@@ -21,7 +21,7 @@ import com.docschedule.model.domain.PhysicianInfo;
 
 public class DailyScheduleDAO {
 
-    public static List<DailySchedule> getScheduleByDateRange(String startDate, String endDate) {
+    public List<DailySchedule> getScheduleByDateRange(String startDate, String endDate) {
 
         Connection connection = null;
         DataSource ds = AppDataSource.getDataSource();
