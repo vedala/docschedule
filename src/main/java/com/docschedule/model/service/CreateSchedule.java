@@ -16,8 +16,12 @@ public class CreateSchedule {
 
     public static void createSchedule(String startDateStr, String endDateStr) {
 
-        Date startDateSide1 = SideDAO.getStartDate(1);
-        int numPhysiciansPerSide = PhysicianDAO.getPhysiciansForSide(1);
+        SideDAO sideDAO = new SideDAO();
+        PhysicianDAO physicianDAO = new PhysicianDAO();
+        ScheduleDAO scheduleDAO = new ScheduleDAO();
+
+        Date startDateSide1 = sideDAO.getStartDate(1);
+        int numPhysiciansPerSide = physicianDAO.getPhysiciansForSide(1);
 
         // determine if schedule start date should start at side 1 or side 2
 
@@ -44,7 +48,7 @@ public class CreateSchedule {
 
         Boolean dateInRange = currDate.compareTo(endDate) <= 0 ? true : false;
         while (dateInRange) {
-            ArrayList<Physician> physicianArr = PhysicianDAO.getPhysiciansBySide(currSide);
+            ArrayList<Physician> physicianArr = physicianDAO.getPhysiciansBySide(currSide);
             for (Physician physician : physicianArr) {
                 int physicianId = physician.getPhysicianId();
                 int nightOrderSelected = physician.getNightOrder();
@@ -53,7 +57,7 @@ public class CreateSchedule {
                 if (nightOrderSelected == nightOrder) {
                     shiftIdToInsert = 2;
                 }
-                ScheduleDAO.addSchedule(currDate, physicianId, shiftIdToInsert);
+                scheduleDAO.addSchedule(currDate, physicianId, shiftIdToInsert);
 
             }
 

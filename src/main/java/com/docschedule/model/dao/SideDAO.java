@@ -16,7 +16,7 @@ import java.sql.Date;
 
 public class SideDAO {
 
-    public static Date getStartDate(int sideId) {
+    public Date getStartDate(int sideId) {
 
         Connection connection = null;
         DataSource ds = AppDataSource.getDataSource();

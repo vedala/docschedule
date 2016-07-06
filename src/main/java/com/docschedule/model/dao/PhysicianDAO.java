@@ -19,7 +19,7 @@ import com.docschedule.model.domain.Physician;
 
 public class PhysicianDAO {
 
-    public static int getPhysiciansForSide(int sideId) {
+    public int getPhysiciansForSide(int sideId) {
 
         Connection connection = null;
         DataSource ds = AppDataSource.getDataSource();
@@ -53,7 +53,7 @@ public class PhysicianDAO {
 
     }
 
-    public static ArrayList<Physician> getPhysiciansBySide(int sideId) {
+    public ArrayList<Physician> getPhysiciansBySide(int sideId) {
 
         Connection connection = null;
         DataSource ds = AppDataSource.getDataSource();

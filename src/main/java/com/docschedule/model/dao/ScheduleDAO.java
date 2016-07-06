@@ -15,7 +15,7 @@ import java.sql.Date;
 
 public class ScheduleDAO {
 
-    public static void addSchedule(Date currDate, int physicianId, int shiftId) {
+    public void addSchedule(Date currDate, int physicianId, int shiftId) {
 
         Connection connection = null;
         DataSource ds = AppDataSource.getDataSource();

@@ -17,7 +17,8 @@ public class ViewSchedule {
 
     public static List<DailySchedule> getSchedule(String startDate, String endDate) {
 
-        List<DailySchedule> scheduleArr = DailyScheduleDAO.getScheduleByDateRange(startDate, endDate);
+        DailyScheduleDAO dailyScheduleDAO = new DailyScheduleDAO();
+        List<DailySchedule> scheduleArr = dailyScheduleDAO.getScheduleByDateRange(startDate, endDate);
 
         return scheduleArr;
     }
