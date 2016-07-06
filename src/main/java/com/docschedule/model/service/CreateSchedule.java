@@ -16,12 +16,17 @@ public class CreateSchedule {
 
     public static void createSchedule(String startDateStr, String endDateStr) {
 
+        final int SIDE_ONE = 1;
+        final int SIDE_TWO = 2;
+        final int SHIFT_DAY   = 1;
+        final int SHIFT_NIGHT = 2;
+
         SideDAO sideDAO = new SideDAO();
         PhysicianDAO physicianDAO = new PhysicianDAO();
         ScheduleDAO scheduleDAO = new ScheduleDAO();
 
-        Date startDateSide1 = sideDAO.getStartDate(1);
-        int numPhysiciansPerSide = physicianDAO.getPhysiciansForSide(1);
+        Date startDateSide1 = sideDAO.getStartDate(SIDE_ONE);
+        int numPhysiciansPerSide = physicianDAO.getPhysiciansForSide(SIDE_ONE);
 
         // determine if schedule start date should start at side 1 or side 2
 
@@ -33,15 +38,15 @@ public class CreateSchedule {
 
         int side = -1;
         if ((daysBetween % 14) < 7) {
-            side = 1;
+            side = SIDE_ONE;
         }
         else {
-            side = 2;
+            side = SIDE_TWO;
         }
 
         // create schedule records keeping in mind night order
         int nightOrder = 1;
-        int currSide = 1;
+        int currSide = SIDE_ONE;
         int week = 1;
         Date currDate = startDate;
         int dayCount = 1;
@@ -52,10 +57,10 @@ public class CreateSchedule {
             for (Physician physician : physicianArr) {
                 int physicianId = physician.getPhysicianId();
                 int nightOrderSelected = physician.getNightOrder();
-                int shiftIdToInsert = 1;
+                int shiftIdToInsert = SHIFT_DAY;
 
                 if (nightOrderSelected == nightOrder) {
-                    shiftIdToInsert = 2;
+                    shiftIdToInsert = SHIFT_NIGHT;
                 }
                 scheduleDAO.addSchedule(currDate, physicianId, shiftIdToInsert);
 
@@ -75,7 +80,7 @@ public class CreateSchedule {
             // Tuesday is start of new week
             if (dayOfWeek == Calendar.TUESDAY && dayCount > 1) {
                 week++;
-                currSide = (currSide == 1) ? 2 : 1;
+                currSide = (currSide == SIDE_ONE) ? SIDE_TWO : SIDE_ONE;
 
                 // Night order changes once every four weeks
                 if ((week > 1) && (week % 4 == 1)) {
