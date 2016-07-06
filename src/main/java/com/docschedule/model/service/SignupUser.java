@@ -36,7 +36,8 @@ public class SignupUser {
             throw new RuntimeException("SHA-256 is not available", e);
         }
 
-        UserDAO.addUser(username, passwordHash, toEmail, uuidString);
+        UserDAO userDAO = new UserDAO();
+        userDAO.addUser(username, passwordHash, toEmail, uuidString);
 
         // Read properties file
 

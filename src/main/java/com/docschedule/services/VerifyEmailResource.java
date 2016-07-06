@@ -20,6 +20,7 @@ public class VerifyEmailResource {
 
     @GET
     public void verifyAndUpdate(@PathParam("verifyToken") String verifyToken) {
-        UserDAO.updateUserVerified(verifyToken);
+        UserDAO userDAO = new UserDAO();
+        userDAO.updateUserVerified(verifyToken);
     }
 }

@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-    public static void addUser(String username, String password, String toEmail, String token) {
+    public void addUser(String username, String password, String toEmail, String token) {
 
         Connection connection = null;
         DataSource ds = AppDataSource.getDataSource();
@@ -45,7 +45,7 @@ public class UserDAO {
 
     }
 
-    public static void updateUserVerified(String token) {
+    public void updateUserVerified(String token) {
 
         Connection connection = null;
         DataSource ds = AppDataSource.getDataSource();
