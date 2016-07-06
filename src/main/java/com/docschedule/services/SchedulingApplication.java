@@ -11,8 +11,6 @@ public class SchedulingApplication extends Application {
     private Set<Class<?>> empty = new HashSet<Class<?>>();
 
     public SchedulingApplication() {
-        singletons.add(new DateRangeScheduleResource());
-        singletons.add(new OneDayScheduleResource());
         singletons.add(new VerifyEmailResource());
     }
 
