@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.time.DayOfWeek;
 
 import com.docschedule.model.service.CreateSchedule;
 
@@ -24,6 +25,21 @@ public class CreateScheduleController extends HttpServlet {
         String endDate   = request.getParameter("enddate");
 
         List<String> errorMessage = new ArrayList<String>();
+
+        validateParams(errorMessage, startDate, endDate);
+
+        if (errorMessage.size() > 0) {
+            request.setAttribute("createErrorMessages", errorMessage);
+            request.getRequestDispatcher("createsched.html").forward(request, response);
+        }
+        else {
+            CreateSchedule.createSchedule(startDate, endDate);
+            response.sendRedirect("create_success.html");
+        }
+
+    }
+
+    private void validateParams(List<String> errorMessage, String startDate, String endDate) {
 
         if (startDate == null || startDate.equals("")) {
             errorMessage.add("Start date must be entered.");
@@ -48,14 +64,13 @@ public class CreateScheduleController extends HttpServlet {
         }
 
         if (errorMessage.size() > 0) {
-            request.setAttribute("createErrorMessages", errorMessage);
-            request.getRequestDispatcher("createsched.html").forward(request, response);
-        }
-        else {
-            CreateSchedule.createSchedule(startDate, endDate);
-            response.sendRedirect("create_success.html");
+            return;
         }
 
+        LocalDate sDate = LocalDate.parse(startDate);
+        if (sDate.getDayOfWeek() != DayOfWeek.TUESDAY) {
+            errorMessage.add("Start date must be a Tuesday");
+        }
     }
 }
 
