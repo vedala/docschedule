@@ -34,6 +34,10 @@
         <servlet-class>com.docschedule.controller.SignupController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>VerifyEmail</servlet-name>
+        <servlet-class>com.docschedule.controller.VerifyEmailController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CreateSched</servlet-name>
         <servlet-class>com.docschedule.controller.CreateScheduleController</servlet-class>
     </servlet>
@@ -44,6 +48,10 @@
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerifyEmail</servlet-name>
+        <url-pattern>/VerifyEmail/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateSched</servlet-name>

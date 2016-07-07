@@ -90,7 +90,7 @@ public class SignupUser {
             verifyURL.append(contextPath);
         }
 
-        verifyURL.append("/api/v1/").append("VerifyEmail").append("/").append(uuidString);
+        verifyURL.append("/VerifyEmail").append("/").append(uuidString);
         String message = "Click on the link below to activate your account:\n\n"
                          + verifyURL.toString();
         sm.sendMessage(host, port, userEmail, toEmail, refreshToken,

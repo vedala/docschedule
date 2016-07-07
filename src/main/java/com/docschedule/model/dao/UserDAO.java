@@ -54,7 +54,7 @@ public class UserDAO {
         try {
             connection = ds.getConnection();
 
-            String sqlString =   "update users set verified = 1 where token = ?";
+            String sqlString =   "update users set verified = 1 where token = ? and verified = 0";
 
             preparedStatement = connection.prepareStatement(sqlString);
             preparedStatement.setString(1, token);
