@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 import com.docschedule.model.domain.DailySchedule;
-import com.docschedule.model.service.ViewSchedule;
+import com.docschedule.model.dao.DailyScheduleDAO;
 
 public class ViewScheduleController extends HttpServlet {
 
@@ -91,7 +91,8 @@ public class ViewScheduleController extends HttpServlet {
             LocalDate eDate = sDate.plusDays(daysToDisplay-1);
             String endDate = eDate.toString();
 
-            List<DailySchedule> scheduleArr = ViewSchedule.getSchedule(startDate, endDate);
+            DailyScheduleDAO dailyScheduleDAO = new DailyScheduleDAO();
+            List<DailySchedule> scheduleArr = dailyScheduleDAO.getScheduleByDateRange(startDate, endDate);
 
             request.setAttribute("scheduleArr", scheduleArr);
         }
