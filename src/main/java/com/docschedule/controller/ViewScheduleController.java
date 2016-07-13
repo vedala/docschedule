@@ -16,6 +16,7 @@ import java.time.format.DateTimeParseException;
 
 import com.docschedule.model.domain.DailySchedule;
 import com.docschedule.model.dao.DailyScheduleDAO;
+import com.docschedule.model.dao.DAOException;
 
 public class ViewScheduleController extends HttpServlet {
 
@@ -86,20 +87,30 @@ public class ViewScheduleController extends HttpServlet {
             }
         }
 
+        boolean gotDAOException = false;
+
         if (errorMessage.size() == 0 && startDate != null) {
             LocalDate sDate = LocalDate.parse(startDate);
             LocalDate eDate = sDate.plusDays(daysToDisplay-1);
             String endDate = eDate.toString();
 
             DailyScheduleDAO dailyScheduleDAO = new DailyScheduleDAO();
-            List<DailySchedule> scheduleArr = dailyScheduleDAO.getScheduleByDateRange(startDate, endDate);
-
-            request.setAttribute("scheduleArr", scheduleArr);
+            try {
+                List<DailySchedule> scheduleArr =
+                            dailyScheduleDAO.getScheduleByDateRange(startDate, endDate);
+                request.setAttribute("scheduleArr", scheduleArr);
+            } catch (DAOException e) {
+                gotDAOException = true;
+            }
         }
         else {
             request.setAttribute("dispSchedErrorMessages", errorMessage);
         }
 
-        request.getRequestDispatcher("schedmain_new.html").forward(request, response);
+        if (gotDAOException) {
+            request.getRequestDispatcher("dispsched_fail.html").forward(request, response);
+        } else {
+            request.getRequestDispatcher("schedmain_new.html").forward(request, response);
+        }
     }
 }
