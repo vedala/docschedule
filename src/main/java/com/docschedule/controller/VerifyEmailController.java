@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.docschedule.model.dao.UserDAO;
+import com.docschedule.model.dao.DAOException;
 
 public class VerifyEmailController extends HttpServlet {
 
@@ -21,15 +22,25 @@ public class VerifyEmailController extends HttpServlet {
         String[] splitPath = path.split("/");
         String verifyToken = splitPath[1];
 
-        UserDAO userDAO = new UserDAO();
-        userDAO.updateUserVerified(verifyToken);
-
-        StringBuilder redirectString = new StringBuilder();
-        String contextPath = request.getContextPath();
-        if (!contextPath.equals("")) {
-            redirectString.append(contextPath);
+        boolean gotDAOException = false;
+        try {
+            UserDAO userDAO = new UserDAO();
+            userDAO.updateUserVerified(verifyToken);
+        } catch (DAOException e) {
+            gotDAOException = true;
         }
-        redirectString.append("/email_verified.html");
+
+       StringBuilder redirectString = new StringBuilder();
+       String contextPath = request.getContextPath();
+       if (!contextPath.equals("")) {
+           redirectString.append(contextPath);
+       }
+        if (gotDAOException) {
+            redirectString.append("/verify_failure.html");
+        }
+        else {
+            redirectString.append("/email_verified.html");
+        }
         response.sendRedirect(redirectString.toString());
 
     }
