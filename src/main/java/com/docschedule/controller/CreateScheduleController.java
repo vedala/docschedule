@@ -17,6 +17,7 @@ import java.time.DayOfWeek;
 
 import com.docschedule.model.service.CreateSchedule;
 import com.docschedule.model.dao.ScheduleDAO;
+import com.docschedule.model.dao.DAOException;
 
 public class CreateScheduleController extends HttpServlet {
 
@@ -28,15 +29,32 @@ public class CreateScheduleController extends HttpServlet {
 
         List<String> errorMessage = new ArrayList<String>();
 
-        validateParams(errorMessage, startDate, endDate);
+        boolean validateDAOException = false;
+        try {
+            validateParams(errorMessage, startDate, endDate);
+        } catch (DAOException e) {
+            validateDAOException = true;
+        }
 
-        if (errorMessage.size() > 0) {
+        if (validateDAOException) {
+            response.sendRedirect("create_failure.html");
+        }
+        else if (errorMessage.size() > 0) {
             request.setAttribute("createErrorMessages", errorMessage);
             request.getRequestDispatcher("createsched.html").forward(request, response);
         }
         else {
-            CreateSchedule.createSchedule(startDate, endDate);
-            response.sendRedirect("create_success.html");
+            boolean gotDAOException = false;
+            try {
+                CreateSchedule.createSchedule(startDate, endDate);
+            } catch (DAOException e) {
+                gotDAOException = true;
+            }
+            if (gotDAOException) {
+                response.sendRedirect("create_failure.html");
+            } else {
+                response.sendRedirect("create_success.html");
+            }
         }
 
     }
