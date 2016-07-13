@@ -33,7 +33,7 @@ public class DailyScheduleDAO {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
             e.printStackTrace();
-            throw new DAOException("NamingException encountered");
+            throw new DAOException("NamingException encountered", e);
         }
 
     	ArrayList<DailySchedule> dailyScheduleArray = null;
@@ -95,14 +95,14 @@ public class DailyScheduleDAO {
     		System.out.println("SQLException: " + e.getMessage());
     		System.out.println("SQLState: " + e.getSQLState());
     		System.out.println("VendorError: " + e.getErrorCode());
-            throw new DAOException("SQLException during data access");
+            throw new DAOException("SQLException during data access", e);
     	} finally {
     		try {
     			connection.close();
     		} catch (SQLException e) {
     			System.out.println("SQL Exception-close");
     			System.out.println("SQLException: " + e.getMessage());
-                throw new DAOException("SQLException on attempt to close connection");
+                throw new DAOException("SQLException on attempt to close connection", e);
     		}
     	}
 

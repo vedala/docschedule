@@ -26,7 +26,7 @@ public class ScheduleDAO {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
             e.printStackTrace();
-            throw new DAOException("NamingException encountered");
+            throw new DAOException("NamingException encountered", e);
         }
 
         try {
@@ -43,14 +43,14 @@ public class ScheduleDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DAOException("SQLException during data access");
+            throw new DAOException("SQLException during data access", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
                 System.out.println("SQL Exception-close");
                 System.out.println("SQLException: " + e.getMessage());
-                throw new DAOException("SQLException on attempt to close connection");
+                throw new DAOException("SQLException on attempt to close connection", e);
             }
         }
     }
@@ -67,7 +67,7 @@ public class ScheduleDAO {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
             e.printStackTrace();
-            throw new DAOException("NamingException encountered");
+            throw new DAOException("NamingException encountered", e);
         }
 
         try {
@@ -82,14 +82,14 @@ public class ScheduleDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DAOException("SQLException during data access");
+            throw new DAOException("SQLException during data access", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
                 System.out.println("SQL Exception-close");
                 System.out.println("SQLException: " + e.getMessage());
-                throw new DAOException("SQLException on attempt to close connection");
+                throw new DAOException("SQLException on attempt to close connection", e);
             }
         }
 
@@ -108,7 +108,7 @@ public class ScheduleDAO {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
             e.printStackTrace();
-            throw new DAOException("NamingException encountered");
+            throw new DAOException("NamingException encountered", e);
         }
 
         try {
@@ -126,14 +126,14 @@ public class ScheduleDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DAOException("SQLException during data access");
+            throw new DAOException("SQLException during data access", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
                 System.out.println("SQL Exception-close");
                 System.out.println("SQLException: " + e.getMessage());
-                throw new DAOException("SQLException on attempt to close connection");
+                throw new DAOException("SQLException on attempt to close connection", e);
             }
         }
 
@@ -152,7 +152,7 @@ public class ScheduleDAO {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
             e.printStackTrace();
-            throw new DAOException("NamingException encountered");
+            throw new DAOException("NamingException encountered", e);
         }
 
         try {
@@ -167,14 +167,14 @@ public class ScheduleDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DAOException("SQLException during data access");
+            throw new DAOException("SQLException during data access", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
                 System.out.println("SQL Exception-close");
                 System.out.println("SQLException: " + e.getMessage());
-                throw new DAOException("SQLException on attempt to close connection");
+                throw new DAOException("SQLException on attempt to close connection", e);
             }
         }
 
