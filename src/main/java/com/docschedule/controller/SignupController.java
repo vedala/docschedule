@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.docschedule.model.service.SignupUser;
+import com.docschedule.model.dao.DAOException;
 
 public class SignupController extends HttpServlet {
 
@@ -24,6 +25,30 @@ public class SignupController extends HttpServlet {
 
         List<String> errorMessage = new ArrayList<String>();
 
+        validateParams(errorMessage, username, password, confirm, toEmail);
+
+        if (errorMessage.size() > 0) {
+            request.setAttribute("signupErrorMessages", errorMessage);
+            request.getRequestDispatcher("signup.html").forward(request, response);
+        }
+        else {
+            boolean gotDAOException = false;
+            try {
+                SignupUser.addNewUser(username, password, toEmail, getServletContext(), request);
+            } catch (DAOException e) {
+                gotDAOException = true;
+            }
+
+            if (gotDAOException) {
+                response.sendRedirect("signup_failure.html");
+            } else {
+                response.sendRedirect("signup_message.html");
+            }
+        }
+    }
+
+    private void validateParams(List<String> errorMessage, String username, String password,
+                                                            String confirm, String toEmail) {
         if (username == null || username.equals("")) {
             errorMessage.add("Username must be entered.");
         }
@@ -45,14 +70,6 @@ public class SignupController extends HttpServlet {
         if (toEmail == null || toEmail.equals("")) {
             errorMessage.add("Email must be entered.");
         }
-
-        if (errorMessage.size() > 0) {
-            request.setAttribute("signupErrorMessages", errorMessage);
-            request.getRequestDispatcher("signup.html").forward(request, response);
-        }
-        else {
-            SignupUser.addNewUser(username, password, toEmail, getServletContext(), request);
-            response.sendRedirect("signup_message.html");
-        }
     }
+
 }
