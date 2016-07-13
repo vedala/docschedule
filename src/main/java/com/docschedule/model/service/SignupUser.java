@@ -17,12 +17,14 @@ import org.apache.commons.codec.binary.Hex;
 
 import com.docschedule.model.util.SendMessage;
 import com.docschedule.model.dao.UserDAO;
+import com.docschedule.model.dao.DAOException;
 
 
 public class SignupUser {
 
     public static void addNewUser(String username, String password, String toEmail,
-                              ServletContext servletContext, HttpServletRequest request) {
+                              ServletContext servletContext, HttpServletRequest request)
+                                                                    throws DAOException {
 
         UUID uuid = UUID.randomUUID();
         String uuidString = uuid.toString();
@@ -37,7 +39,12 @@ public class SignupUser {
         }
 
         UserDAO userDAO = new UserDAO();
-        userDAO.addUser(username, passwordHash, toEmail, uuidString);
+        try {
+            userDAO.addUser(username, passwordHash, toEmail, uuidString);
+        } catch (DAOException e) {
+            e.printStackTrace();
+            throw new DAOException("DAOException encountered on userDAO.addUser", e);
+        }
 
         // Read properties file
 

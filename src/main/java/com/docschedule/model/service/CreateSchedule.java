@@ -6,6 +6,7 @@ import java.sql.Date;
 import com.docschedule.model.dao.SideDAO;
 import com.docschedule.model.dao.PhysicianDAO;
 import com.docschedule.model.dao.ScheduleDAO;
+import com.docschedule.model.dao.DAOException;
 import com.docschedule.model.domain.Physician;
 
 import java.util.Calendar;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 public class CreateSchedule {
 
-    public static void createSchedule(String startDateStr, String endDateStr) {
+    public static void createSchedule(String startDateStr, String endDateStr) throws DAOException {
 
         final int SIDE_ONE = 1;
         final int SIDE_TWO = 2;
@@ -25,8 +26,22 @@ public class CreateSchedule {
         PhysicianDAO physicianDAO = new PhysicianDAO();
         ScheduleDAO scheduleDAO = new ScheduleDAO();
 
-        Date startDateSide1 = sideDAO.getStartDate(SIDE_ONE);
-        int numPhysiciansPerSide = physicianDAO.getPhysiciansForSide(SIDE_ONE);
+        Date startDateSide1 = null;
+        int numPhysiciansPerSide = -1;
+
+        try {
+            startDateSide1 = sideDAO.getStartDate(SIDE_ONE);
+        } catch (DAOException e) {
+            e.printStackTrace();
+            throw new DAOException("DAOException encountered on sideDAO.getStartDate", e);
+        }
+
+        try {
+            numPhysiciansPerSide = physicianDAO.getPhysiciansForSide(SIDE_ONE);
+        } catch (DAOException e) {
+            e.printStackTrace();
+            throw new DAOException("DAOException encountered on physicianDAO.getPhysiciansForSide", e);
+        }
 
         // determine if schedule start date should start at side 1 or side 2
 
@@ -53,7 +68,15 @@ public class CreateSchedule {
 
         Boolean dateInRange = currDate.compareTo(endDate) <= 0 ? true : false;
         while (dateInRange) {
-            ArrayList<Physician> physicianArr = physicianDAO.getPhysiciansBySide(currSide);
+            ArrayList<Physician> physicianArr = null;
+            try {
+                physicianArr = physicianDAO.getPhysiciansBySide(currSide);
+            } catch (DAOException e) {
+                e.printStackTrace();
+                throw new DAOException(
+                    "DAOException encountered on physicianDAO.getPhysiciansForSide inside while", e);
+            }
+
             for (Physician physician : physicianArr) {
                 int physicianId = physician.getPhysicianId();
                 int nightOrderSelected = physician.getNightOrder();
@@ -62,7 +85,12 @@ public class CreateSchedule {
                 if (nightOrderSelected == nightOrder) {
                     shiftIdToInsert = SHIFT_NIGHT;
                 }
-                scheduleDAO.addSchedule(currDate, physicianId, shiftIdToInsert);
+                try {
+                    scheduleDAO.addSchedule(currDate, physicianId, shiftIdToInsert);
+                } catch (DAOException e) {
+                    e.printStackTrace();
+                    throw new DAOException("DAOException encountered on scheduleDAO.addSchedule", e);
+                }
 
             }
 
