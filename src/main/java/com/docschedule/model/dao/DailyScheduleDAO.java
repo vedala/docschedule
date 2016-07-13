@@ -21,12 +21,20 @@ import com.docschedule.model.domain.PhysicianInfo;
 
 public class DailyScheduleDAO {
 
-    public List<DailySchedule> getScheduleByDateRange(String startDate, String endDate) {
+    public List<DailySchedule> getScheduleByDateRange(String startDate, String endDate)
+                                                        throws DAOException {
 
         Connection connection = null;
-        DataSource ds = AppDataSource.getDataSource();
+        DataSource ds = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+
+        try {
+            ds = AppDataSource.getDataSource();
+        } catch (NamingException e) {
+            e.printStackTrace();
+            throw new DAOException("NamingException encountered");
+        }
 
     	ArrayList<DailySchedule> dailyScheduleArray = null;
     	ArrayList<PhysicianInfo> physicianInfoArray;
@@ -87,13 +95,14 @@ public class DailyScheduleDAO {
     		System.out.println("SQLException: " + e.getMessage());
     		System.out.println("SQLState: " + e.getSQLState());
     		System.out.println("VendorError: " + e.getErrorCode());
+            throw new DAOException("SQLException during data access");
     	} finally {
     		try {
     			connection.close();
     		} catch (SQLException e) {
     			System.out.println("SQL Exception-close");
     			System.out.println("SQLException: " + e.getMessage());
-
+                throw new DAOException("SQLException on attempt to close connection");
     		}
     	}
 

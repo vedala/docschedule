@@ -16,13 +16,20 @@ import java.sql.Date;
 
 public class SideDAO {
 
-    public Date getStartDate(int sideId) {
+    public Date getStartDate(int sideId) throws DAOException {
 
         Connection connection = null;
-        DataSource ds = AppDataSource.getDataSource();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Date startDate = null;
+        DataSource ds = null;
+
+        try {
+            ds = AppDataSource.getDataSource();
+        } catch (NamingException e) {
+            e.printStackTrace();
+            throw new DAOException("NamingException encountered");
+        }
 
         try {
             connection = ds.getConnection();
@@ -37,12 +44,14 @@ public class SideDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DAOException("SQLException during data access");
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
                 System.out.println("SQL Exception-close");
                 System.out.println("SQLException: " + e.getMessage());
+                throw new DAOException("SQL Exception on attempt to close connection");
             }
         }
 

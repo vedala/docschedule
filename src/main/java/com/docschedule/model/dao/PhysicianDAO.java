@@ -19,13 +19,20 @@ import com.docschedule.model.domain.Physician;
 
 public class PhysicianDAO {
 
-    public int getPhysiciansForSide(int sideId) {
+    public int getPhysiciansForSide(int sideId) throws DAOException {
 
         Connection connection = null;
-        DataSource ds = AppDataSource.getDataSource();
+        DataSource ds = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int numPhysiciansPerSide = -1;
+
+        try {
+            ds = AppDataSource.getDataSource();
+        } catch (NamingException e) {
+            e.printStackTrace();
+            throw new DAOException("NamingException encountered");
+        }
 
         try {
             connection = ds.getConnection();
@@ -40,12 +47,14 @@ public class PhysicianDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DAOException("SQLException during data access");
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
                 System.out.println("SQL Exception-close");
                 System.out.println("SQLException: " + e.getMessage());
+                throw new DAOException("SQL Exception on attempt to close connection");
             }
         }
 
@@ -53,13 +62,20 @@ public class PhysicianDAO {
 
     }
 
-    public ArrayList<Physician> getPhysiciansBySide(int sideId) {
+    public ArrayList<Physician> getPhysiciansBySide(int sideId) throws DAOException {
 
         Connection connection = null;
-        DataSource ds = AppDataSource.getDataSource();
+        DataSource ds = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         ArrayList<Physician> arr = new ArrayList<Physician>();
+
+        try {
+            ds = AppDataSource.getDataSource();
+        } catch (NamingException e) {
+            e.printStackTrace();
+            throw new DAOException("NamingException encountered");
+        }
 
         try {
             connection = ds.getConnection();
@@ -79,12 +95,14 @@ public class PhysicianDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DAOException("SQLException during data access");
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
                 System.out.println("SQL Exception-close");
                 System.out.println("SQLException: " + e.getMessage());
+                throw new DAOException("SQL Exception on attempt to close connection");
             }
         }
 

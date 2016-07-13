@@ -13,11 +13,19 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-    public void addUser(String username, String password, String toEmail, String token) {
+    public void addUser(String username, String password, String toEmail, String token)
+                                                        throws DAOException {
 
         Connection connection = null;
-        DataSource ds = AppDataSource.getDataSource();
+        DataSource ds = null;
         PreparedStatement preparedStatement = null;
+
+        try {
+            ds = AppDataSource.getDataSource();
+        } catch (NamingException e) {
+            e.printStackTrace();
+            throw new DAOException("NamingException encountered");
+        }
 
         try {
             connection = ds.getConnection();
@@ -34,22 +42,31 @@ public class UserDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DAOException("SQLException during data access");
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
                 System.out.println("SQL Exception-close");
                 System.out.println("SQLException: " + e.getMessage());
+                throw new DAOException("SQL Exception on attempt to close connection");
             }
         }
 
     }
 
-    public void updateUserVerified(String token) {
+    public void updateUserVerified(String token) throws DAOException {
 
         Connection connection = null;
-        DataSource ds = AppDataSource.getDataSource();
+        DataSource ds = null;
         PreparedStatement preparedStatement = null;
+
+        try {
+            ds = AppDataSource.getDataSource();
+        } catch (NamingException e) {
+            e.printStackTrace();
+            throw new DAOException("NamingException encountered");
+        }
 
         try {
             connection = ds.getConnection();
@@ -62,12 +79,14 @@ public class UserDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DAOException("SQLException during data access");
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
                 System.out.println("SQL Exception-close");
                 System.out.println("SQLException: " + e.getMessage());
+                throw new DAOException("SQL Exception on attempt to close connection");
             }
         }
 
