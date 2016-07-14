@@ -12,11 +12,15 @@ import com.docschedule.model.domain.Physician;
 import java.util.Calendar;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class CreateSchedule {
 
     public static void createSchedule(String startDateStr, String endDateStr) throws DAOException {
 
+        Logger logger = LoggerFactory.getLogger("com.docschedule.model.dao.SideDAO");
         final int SIDE_ONE = 1;
         final int SIDE_TWO = 2;
         final int SHIFT_DAY   = 1;
@@ -32,14 +36,14 @@ public class CreateSchedule {
         try {
             startDateSide1 = sideDAO.getStartDate(SIDE_ONE);
         } catch (DAOException e) {
-            e.printStackTrace();
+            logger.error("createSchedule - DAOException in sideDAO.getStartDate", e);
             throw new ServiceException("DAOException encountered on sideDAO.getStartDate", e);
         }
 
         try {
             numPhysiciansPerSide = physicianDAO.getPhysiciansForSide(SIDE_ONE);
         } catch (DAOException e) {
-            e.printStackTrace();
+            logger.error("createSchedule - DAOException in physicianDAO.getPhysiciansForSide", e);
             throw new ServiceException(
                         "DAOException encountered on physicianDAO.getPhysiciansForSide", e);
         }
@@ -73,9 +77,9 @@ public class CreateSchedule {
             try {
                 physicianArr = physicianDAO.getPhysiciansBySide(currSide);
             } catch (DAOException e) {
-                e.printStackTrace();
+                logger.error("createSchedule - DAOException in getPhysiciansBySide", e);
                 throw new ServiceException(
-                    "DAOException encountered on physicianDAO.getPhysiciansForSide inside while", e);
+                    "DAOException encountered on physicianDAO.getPhysiciansBySide", e);
             }
 
             for (Physician physician : physicianArr) {
@@ -89,7 +93,7 @@ public class CreateSchedule {
                 try {
                     scheduleDAO.addSchedule(currDate, physicianId, shiftIdToInsert);
                 } catch (DAOException e) {
-                    e.printStackTrace();
+                    logger.error("createSchedule - DAOException in scheduleDAO.addSchedule", e);
                     throw new ServiceException(
                         "DAOException encountered on scheduleDAO.addSchedule", e);
                 }

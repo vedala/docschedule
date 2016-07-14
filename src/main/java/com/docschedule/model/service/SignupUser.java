@@ -19,6 +19,9 @@ import com.docschedule.model.util.SendMessage;
 import com.docschedule.model.dao.UserDAO;
 import com.docschedule.model.dao.DAOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class SignupUser {
 
@@ -26,6 +29,7 @@ public class SignupUser {
                               ServletContext servletContext, HttpServletRequest request)
                                                                     throws DAOException {
 
+        Logger logger = LoggerFactory.getLogger("com.docschedule.model.dao.SideDAO");
         UUID uuid = UUID.randomUUID();
         String uuidString = uuid.toString();
         String passwordHash = null;
@@ -35,6 +39,7 @@ public class SignupUser {
             byte hashedBytes[] = digest.digest(password.getBytes(StandardCharsets.UTF_8));
             passwordHash = Hex.encodeHexString(hashedBytes);
         } catch (NoSuchAlgorithmException e) {
+            logger.error("NoSuchAlgorithmException", e);
             throw new ServiceException("SHA-256 is not available", e);
         }
 
@@ -42,7 +47,7 @@ public class SignupUser {
         try {
             userDAO.addUser(username, passwordHash, toEmail, uuidString);
         } catch (DAOException e) {
-            e.printStackTrace();
+            logger.error("DAOException in addNewUser", e);
             throw new ServiceException("DAOException encountered on userDAO.addUser", e);
         }
 
@@ -70,7 +75,7 @@ public class SignupUser {
             clientId = properties.getProperty("clientId");
             clientSecret = properties.getProperty("clientSecret");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("addNewUser - IOException email.properties", e);
             throw new ServiceException("IOException when reading email.properties", e);
         } finally {
             try {
@@ -78,7 +83,7 @@ public class SignupUser {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("getStartDate - IOException stream close", e);
                 throw new ServiceException("IOException input stream close attempt", e);
             }
         }
