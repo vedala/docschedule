@@ -1,3 +1,11 @@
+/*
+ * This class is adapted from sample code provided
+ * by Google Inc at the following location:
+ *
+ *          https://github.com/google/gmail-oauth2-tools
+ *
+ */
+
 package com.docschedule.model.util;
 
 import java.io.IOException;
