@@ -18,6 +18,7 @@ import org.apache.commons.codec.binary.Hex;
 import com.docschedule.model.util.SendMessage;
 import com.docschedule.model.dao.UserDAO;
 import com.docschedule.model.dao.DAOException;
+import com.docschedule.model.util.UtilException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,7 +108,12 @@ public class SignupUser {
         verifyURL.append("/VerifyEmail").append("/").append(uuidString);
         String message = "Click on the link below to activate your account:\n\n"
                          + verifyURL.toString();
-        sm.sendMessage(host, port, userEmail, toEmail, refreshToken,
+        try {
+            sm.sendMessage(host, port, userEmail, toEmail, refreshToken,
                                                 clientId, clientSecret, username, message);
+        } catch (UtilException e) {
+            logger.error("addNewUser - UtilException in sendMessage", e);
+            throw new ServiceException("UtilException in sendMessage", e);
+        }
     }
 }

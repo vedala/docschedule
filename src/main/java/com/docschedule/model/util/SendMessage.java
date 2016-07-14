@@ -102,9 +102,11 @@ public class SendMessage {
         } catch (MessagingException e) {
             System.out.println("Messaging Exception");
             System.out.println("Error: " + e.getMessage());
+            throw new UtilException("MessagingException encountered in sendMessage", e);
         } catch (Exception e) {
             System.out.println("Messaging Exception");
             System.out.println("Error: " + e.getMessage());
+            throw new UtilException("Exception encountered in sendMessage", e);
         }
 
     }
