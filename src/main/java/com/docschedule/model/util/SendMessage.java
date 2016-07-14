@@ -11,7 +11,6 @@ package com.docschedule.model.util;
 import java.io.IOException;
 
 import java.util.Properties;
-import java.util.logging.Logger;
 
 import javax.mail.Session;
 import javax.mail.Message;
@@ -25,6 +24,9 @@ import javax.mail.internet.InternetAddress;
 import java.security.Provider;
 import java.security.Security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.sun.mail.smtp.SMTPTransport;
 
 import com.docschedule.model.util.AccessTokenFromRefreshToken;
@@ -33,7 +35,7 @@ import com.docschedule.model.util.OAuth2SaslClientFactory;
 public class SendMessage {
 
     private static final Logger logger =
-        Logger.getLogger(SendMessage.class.getName());
+        LoggerFactory.getLogger(SendMessage.class.getName());
     
     public static final class OAuth2Provider extends Provider {
         private static final long serialVersionUIS = 1L;
@@ -100,12 +102,10 @@ public class SendMessage {
             smtpTransport.sendMessage(message, message.getAllRecipients());
             smtpTransport.close();
         } catch (MessagingException e) {
-            System.out.println("Messaging Exception");
-            System.out.println("Error: " + e.getMessage());
+            logger.error("MessagingException encountered in sendMessage", e);
             throw new UtilException("MessagingException encountered in sendMessage", e);
         } catch (Exception e) {
-            System.out.println("Messaging Exception");
-            System.out.println("Error: " + e.getMessage());
+            logger.error("Exception encountered in sendMessage", e);
             throw new UtilException("Exception encountered in sendMessage", e);
         }
 
