@@ -33,14 +33,15 @@ public class CreateSchedule {
             startDateSide1 = sideDAO.getStartDate(SIDE_ONE);
         } catch (DAOException e) {
             e.printStackTrace();
-            throw new DAOException("DAOException encountered on sideDAO.getStartDate", e);
+            throw new ServiceException("DAOException encountered on sideDAO.getStartDate", e);
         }
 
         try {
             numPhysiciansPerSide = physicianDAO.getPhysiciansForSide(SIDE_ONE);
         } catch (DAOException e) {
             e.printStackTrace();
-            throw new DAOException("DAOException encountered on physicianDAO.getPhysiciansForSide", e);
+            throw new ServiceException(
+                        "DAOException encountered on physicianDAO.getPhysiciansForSide", e);
         }
 
         // determine if schedule start date should start at side 1 or side 2
@@ -73,7 +74,7 @@ public class CreateSchedule {
                 physicianArr = physicianDAO.getPhysiciansBySide(currSide);
             } catch (DAOException e) {
                 e.printStackTrace();
-                throw new DAOException(
+                throw new ServiceException(
                     "DAOException encountered on physicianDAO.getPhysiciansForSide inside while", e);
             }
 
@@ -89,7 +90,8 @@ public class CreateSchedule {
                     scheduleDAO.addSchedule(currDate, physicianId, shiftIdToInsert);
                 } catch (DAOException e) {
                     e.printStackTrace();
-                    throw new DAOException("DAOException encountered on scheduleDAO.addSchedule", e);
+                    throw new ServiceException(
+                        "DAOException encountered on scheduleDAO.addSchedule", e);
                 }
 
             }

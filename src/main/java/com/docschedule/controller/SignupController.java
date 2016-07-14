@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.docschedule.model.service.SignupUser;
-import com.docschedule.model.dao.DAOException;
+import com.docschedule.model.service.ServiceException;
 
 public class SignupController extends HttpServlet {
 
@@ -32,14 +32,14 @@ public class SignupController extends HttpServlet {
             request.getRequestDispatcher("signup.html").forward(request, response);
         }
         else {
-            boolean gotDAOException = false;
+            boolean gotServiceException = false;
             try {
                 SignupUser.addNewUser(username, password, toEmail, getServletContext(), request);
-            } catch (DAOException e) {
-                gotDAOException = true;
+            } catch (ServiceException e) {
+                gotServiceException = true;
             }
 
-            if (gotDAOException) {
+            if (gotServiceException) {
                 response.sendRedirect("signup_failure.html");
             } else {
                 response.sendRedirect("signup_message.html");

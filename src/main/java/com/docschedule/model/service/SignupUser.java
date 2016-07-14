@@ -35,7 +35,7 @@ public class SignupUser {
             byte hashedBytes[] = digest.digest(password.getBytes(StandardCharsets.UTF_8));
             passwordHash = Hex.encodeHexString(hashedBytes);
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("SHA-256 is not available", e);
+            throw new ServiceException("SHA-256 is not available", e);
         }
 
         UserDAO userDAO = new UserDAO();
@@ -43,7 +43,7 @@ public class SignupUser {
             userDAO.addUser(username, passwordHash, toEmail, uuidString);
         } catch (DAOException e) {
             e.printStackTrace();
-            throw new DAOException("DAOException encountered on userDAO.addUser", e);
+            throw new ServiceException("DAOException encountered on userDAO.addUser", e);
         }
 
         // Read properties file
@@ -71,13 +71,15 @@ public class SignupUser {
             clientSecret = properties.getProperty("clientSecret");
         } catch (IOException e) {
             e.printStackTrace();
+            throw new ServiceException("IOException when reading email.properties", e);
         } finally {
             try {
                 if (inputStream != null) {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                    e.printStackTrace();
+                e.printStackTrace();
+                throw new ServiceException("IOException input stream close attempt", e);
             }
         }
 

@@ -16,6 +16,7 @@ import java.time.format.DateTimeParseException;
 import java.time.DayOfWeek;
 
 import com.docschedule.model.service.CreateSchedule;
+import com.docschedule.model.service.ServiceException;
 import com.docschedule.model.dao.ScheduleDAO;
 import com.docschedule.model.dao.DAOException;
 
@@ -44,13 +45,13 @@ public class CreateScheduleController extends HttpServlet {
             request.getRequestDispatcher("createsched.html").forward(request, response);
         }
         else {
-            boolean gotDAOException = false;
+            boolean gotServiceException = false;
             try {
                 CreateSchedule.createSchedule(startDate, endDate);
-            } catch (DAOException e) {
-                gotDAOException = true;
+            } catch (ServiceException e) {
+                gotServiceException = true;
             }
-            if (gotDAOException) {
+            if (gotServiceException) {
                 response.sendRedirect("create_failure.html");
             } else {
                 response.sendRedirect("create_success.html");
