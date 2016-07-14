@@ -11,11 +11,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class UserDAO {
 
     public void addUser(String username, String password, String toEmail, String token)
                                                         throws DAOException {
 
+        Logger logger = LoggerFactory.getLogger("com.docschedule.model.dao.UserDAO");
         Connection connection = null;
         DataSource ds = null;
         PreparedStatement preparedStatement = null;
@@ -23,7 +27,6 @@ public class UserDAO {
         try {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
-            e.printStackTrace();
             throw new DAOException("NamingException encountered", e);
         }
 
@@ -41,14 +44,13 @@ public class UserDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("addUser - data access", e);
             throw new DAOException("SQLException during data access", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                System.out.println("SQL Exception-close");
-                System.out.println("SQLException: " + e.getMessage());
+                logger.error("addUser - connection close", e);
                 throw new DAOException("SQL Exception on attempt to close connection", e);
             }
         }
@@ -57,6 +59,7 @@ public class UserDAO {
 
     public void updateUserVerified(String token) throws DAOException {
 
+        Logger logger = LoggerFactory.getLogger("com.docschedule.model.dao.UserDAO");
         Connection connection = null;
         DataSource ds = null;
         PreparedStatement preparedStatement = null;
@@ -78,14 +81,13 @@ public class UserDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("addUser - data access", e);
             throw new DAOException("SQLException during data access", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                System.out.println("SQL Exception-close");
-                System.out.println("SQLException: " + e.getMessage());
+                logger.error("addUser - connection close", e);
                 throw new DAOException("SQL Exception on attempt to close connection", e);
             }
         }

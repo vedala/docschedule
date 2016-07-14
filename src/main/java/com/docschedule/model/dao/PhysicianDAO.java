@@ -1,12 +1,11 @@
 
 package com.docschedule.model.dao;
 
-import javax.sql.DataSource;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -15,12 +14,16 @@ import java.sql.Date;
 
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.docschedule.model.domain.Physician;
 
 public class PhysicianDAO {
 
     public int getPhysiciansForSide(int sideId) throws DAOException {
 
+        Logger logger = LoggerFactory.getLogger("com.docschedule.model.dao.PhysicianDAO");
         Connection connection = null;
         DataSource ds = null;
         PreparedStatement preparedStatement = null;
@@ -30,7 +33,6 @@ public class PhysicianDAO {
         try {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
-            e.printStackTrace();
             throw new DAOException("NamingException encountered", e);
         }
 
@@ -46,14 +48,13 @@ public class PhysicianDAO {
             numPhysiciansPerSide = resultSet.getInt(1);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("getPhysiciansForSide - data access", e);
             throw new DAOException("SQLException during data access", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                System.out.println("SQL Exception-close");
-                System.out.println("SQLException: " + e.getMessage());
+                logger.error("getPhysiciansForSide - connection close", e);
                 throw new DAOException("SQL Exception on attempt to close connection", e);
             }
         }
@@ -64,6 +65,7 @@ public class PhysicianDAO {
 
     public ArrayList<Physician> getPhysiciansBySide(int sideId) throws DAOException {
 
+        Logger logger = LoggerFactory.getLogger("com.docschedule.model.dao.PhysicianDAO");
         Connection connection = null;
         DataSource ds = null;
         PreparedStatement preparedStatement = null;
@@ -73,7 +75,6 @@ public class PhysicianDAO {
         try {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
-            e.printStackTrace();
             throw new DAOException("NamingException encountered", e);
         }
 
@@ -94,14 +95,13 @@ public class PhysicianDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("getPhysiciansBySide - data access", e);
             throw new DAOException("SQLException during data access", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                System.out.println("SQL Exception-close");
-                System.out.println("SQLException: " + e.getMessage());
+                logger.error("getPhysiciansBySide - connection close", e);
                 throw new DAOException("SQL Exception on attempt to close connection", e);
             }
         }

@@ -16,6 +16,9 @@ import java.sql.Date;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.docschedule.model.domain.DailySchedule;
 import com.docschedule.model.domain.PhysicianInfo;
 
@@ -24,6 +27,7 @@ public class DailyScheduleDAO {
     public List<DailySchedule> getScheduleByDateRange(String startDate, String endDate)
                                                         throws DAOException {
 
+        Logger logger = LoggerFactory.getLogger("com.docschedule.model.dao.DailyScheduleDAO");
         Connection connection = null;
         DataSource ds = null;
         PreparedStatement preparedStatement = null;
@@ -32,7 +36,6 @@ public class DailyScheduleDAO {
         try {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
-            e.printStackTrace();
             throw new DAOException("NamingException encountered", e);
         }
 
@@ -91,17 +94,13 @@ public class DailyScheduleDAO {
 
     	}
     	catch (SQLException e) {
-    		System.out.println("SQL Exception");
-    		System.out.println("SQLException: " + e.getMessage());
-    		System.out.println("SQLState: " + e.getSQLState());
-    		System.out.println("VendorError: " + e.getErrorCode());
+            logger.error("getScheduleByDateRange - data access", e);
             throw new DAOException("SQLException during data access", e);
     	} finally {
     		try {
     			connection.close();
     		} catch (SQLException e) {
-    			System.out.println("SQL Exception-close");
-    			System.out.println("SQLException: " + e.getMessage());
+                logger.error("getScheduleByDateRange - connection close", e);
                 throw new DAOException("SQLException on attempt to close connection", e);
     		}
     	}

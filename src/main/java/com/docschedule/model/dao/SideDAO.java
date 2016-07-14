@@ -13,11 +13,14 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SideDAO {
 
     public Date getStartDate(int sideId) throws DAOException {
 
+        Logger logger = LoggerFactory.getLogger("com.docschedule.model.dao.SideDAO");
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -27,7 +30,6 @@ public class SideDAO {
         try {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
-            e.printStackTrace();
             throw new DAOException("NamingException encountered", e);
         }
 
@@ -43,14 +45,13 @@ public class SideDAO {
             startDate = resultSet.getDate(1);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("getStartDate - data access", e);
             throw new DAOException("SQLException during data access", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                System.out.println("SQL Exception-close");
-                System.out.println("SQLException: " + e.getMessage());
+                logger.error("getStartDate - connection close", e);
                 throw new DAOException("SQL Exception on attempt to close connection", e);
             }
         }

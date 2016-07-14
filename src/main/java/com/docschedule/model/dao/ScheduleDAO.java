@@ -13,11 +13,15 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class ScheduleDAO {
 
     public void addSchedule(Date currDate, int physicianId, int shiftId) throws DAOException {
 
+        Logger logger = LoggerFactory.getLogger("com.docschedule.model.dao.ScheduleDAO");
         Connection connection = null;
         DataSource ds = null;
         PreparedStatement preparedStatement = null;
@@ -25,7 +29,6 @@ public class ScheduleDAO {
         try {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
-            e.printStackTrace();
             throw new DAOException("NamingException encountered", e);
         }
 
@@ -42,14 +45,13 @@ public class ScheduleDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("addSchedule - data access", e);
             throw new DAOException("SQLException during data access", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                System.out.println("SQL Exception-close");
-                System.out.println("SQLException: " + e.getMessage());
+                logger.error("addSchedule - connection close", e);
                 throw new DAOException("SQLException on attempt to close connection", e);
             }
         }
@@ -57,6 +59,7 @@ public class ScheduleDAO {
 
     public int getScheduleCount() throws DAOException {
 
+        Logger logger = LoggerFactory.getLogger("com.docschedule.model.dao.ScheduleDAO");
         Connection connection = null;
         DataSource ds = null;
         PreparedStatement preparedStatement = null;
@@ -66,7 +69,6 @@ public class ScheduleDAO {
         try {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
-            e.printStackTrace();
             throw new DAOException("NamingException encountered", e);
         }
 
@@ -81,14 +83,13 @@ public class ScheduleDAO {
             count = resultSet.getInt(1);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("getScheduleCount - data access", e);
             throw new DAOException("SQLException during data access", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                System.out.println("SQL Exception-close");
-                System.out.println("SQLException: " + e.getMessage());
+                logger.error("getScheduleCount - connection close", e);
                 throw new DAOException("SQLException on attempt to close connection", e);
             }
         }
@@ -98,6 +99,7 @@ public class ScheduleDAO {
 
     public int checkScheduleInRange(String startDate, String endDate) throws DAOException {
 
+        Logger logger = LoggerFactory.getLogger("com.docschedule.model.dao.ScheduleDAO");
         Connection connection = null;
         DataSource ds = null;
         PreparedStatement preparedStatement = null;
@@ -107,7 +109,6 @@ public class ScheduleDAO {
         try {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
-            e.printStackTrace();
             throw new DAOException("NamingException encountered", e);
         }
 
@@ -125,14 +126,13 @@ public class ScheduleDAO {
             count = resultSet.getInt(1);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("checkScheduleInRange - data access", e);
             throw new DAOException("SQLException during data access", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                System.out.println("SQL Exception-close");
-                System.out.println("SQLException: " + e.getMessage());
+                logger.error("checkScheduleInRange - connection close", e);
                 throw new DAOException("SQLException on attempt to close connection", e);
             }
         }
@@ -142,6 +142,7 @@ public class ScheduleDAO {
 
     public Date getMaxScheduleDate() throws DAOException {
 
+        Logger logger = LoggerFactory.getLogger("com.docschedule.model.dao.ScheduleDAO");
         Connection connection = null;
         DataSource ds = null;
         PreparedStatement preparedStatement = null;
@@ -151,7 +152,6 @@ public class ScheduleDAO {
         try {
             ds = AppDataSource.getDataSource();
         } catch (NamingException e) {
-            e.printStackTrace();
             throw new DAOException("NamingException encountered", e);
         }
 
@@ -166,14 +166,13 @@ public class ScheduleDAO {
             maxDate = resultSet.getDate(1);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("getMaxScheduleDate - data access", e);
             throw new DAOException("SQLException during data access", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                System.out.println("SQL Exception-close");
-                System.out.println("SQLException: " + e.getMessage());
+                logger.error("getMaxScheduleDate - connection close", e);
                 throw new DAOException("SQLException on attempt to close connection", e);
             }
         }
