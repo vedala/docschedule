@@ -32,7 +32,7 @@ public class ViewScheduleController extends HttpServlet {
         request.setAttribute("fromGet", "Y");
 
         if (startDate == null) {
-            request.getRequestDispatcher("schedmain_new.html").forward(request, response);
+            request.getRequestDispatcher("schedmain.html").forward(request, response);
         }
         else {
             doPost(request, response);
@@ -110,7 +110,7 @@ public class ViewScheduleController extends HttpServlet {
         if (gotDAOException) {
             request.getRequestDispatcher("dispsched_fail.html").forward(request, response);
         } else {
-            request.getRequestDispatcher("schedmain_new.html").forward(request, response);
+            request.getRequestDispatcher("schedmain.html").forward(request, response);
         }
     }
 }
