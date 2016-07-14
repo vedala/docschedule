@@ -27,11 +27,11 @@ public class CreateScheduleController extends HttpServlet {
         String startDate = request.getParameter("startdate");
         String endDate   = request.getParameter("enddate");
 
-        List<String> errorMessage = new ArrayList<String>();
+        List<String> errorMessages = new ArrayList<String>();
 
         boolean validateDAOException = false;
         try {
-            validateParams(errorMessage, startDate, endDate);
+            validateParams(errorMessages, startDate, endDate);
         } catch (DAOException e) {
             validateDAOException = true;
         }
@@ -39,8 +39,8 @@ public class CreateScheduleController extends HttpServlet {
         if (validateDAOException) {
             response.sendRedirect("create_failure.html");
         }
-        else if (errorMessage.size() > 0) {
-            request.setAttribute("createErrorMessages", errorMessage);
+        else if (errorMessages.size() > 0) {
+            request.setAttribute("createErrorMessages", errorMessages);
             request.getRequestDispatcher("createsched.html").forward(request, response);
         }
         else {
@@ -59,33 +59,33 @@ public class CreateScheduleController extends HttpServlet {
 
     }
 
-    private void validateParams(List<String> errorMessage, String startDate, String endDate) {
+    private void validateParams(List<String> errorMessages, String startDate, String endDate) {
 
         if (startDate == null || startDate.equals("")) {
-            errorMessage.add("Start date must be entered.");
+            errorMessages.add("Start date must be entered.");
         }
         else {
             try {
                 LocalDate.parse(startDate);
             } catch (DateTimeParseException e) {
-                errorMessage.add("Start date must in format YYYY-MM-DD");
+                errorMessages.add("Start date must in format YYYY-MM-DD");
             }
         }
 
         if (endDate == null || endDate.equals("")) {
-            errorMessage.add("End date must be entered.");
+            errorMessages.add("End date must be entered.");
         }
         else {
             try {
                 LocalDate.parse(endDate);
             } catch (DateTimeParseException e) {
-                errorMessage.add("End date must in format YYYY-MM-DD");
+                errorMessages.add("End date must in format YYYY-MM-DD");
             }
         }
 
         // Display errors to user if any of the above validations fail
 
-        if (errorMessage.size() > 0) {
+        if (errorMessages.size() > 0) {
             return;
         }
 
@@ -93,7 +93,7 @@ public class CreateScheduleController extends HttpServlet {
         LocalDate eDate = LocalDate.parse(endDate);
 
         if (!eDate.isAfter(sDate)) {
-            errorMessage.add("End date must be higher than start date");
+            errorMessages.add("End date must be higher than start date");
             return;
         }
 
@@ -113,16 +113,16 @@ public class CreateScheduleController extends HttpServlet {
                 if (maxDate != null) {
                     err = err + " (schedule exists till " + maxDate.toString() + ")";
                 }
-                errorMessage.add(err);
+                errorMessages.add(err);
             }
         }
 
         if (sDate.getDayOfWeek() != DayOfWeek.TUESDAY) {
-            errorMessage.add("Start date must be a Tuesday");
+            errorMessages.add("Start date must be a Tuesday");
         }
 
         if (eDate.getDayOfWeek() != DayOfWeek.MONDAY) {
-            errorMessage.add("End date must be a Monday");
+            errorMessages.add("End date must be a Monday");
         }
     }
 }

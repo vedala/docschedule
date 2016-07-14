@@ -23,12 +23,12 @@ public class SignupController extends HttpServlet {
         String confirm = request.getParameter("confirm");
         String toEmail = request.getParameter("email");
 
-        List<String> errorMessage = new ArrayList<String>();
+        List<String> errorMessages = new ArrayList<String>();
 
-        validateParams(errorMessage, username, password, confirm, toEmail);
+        validateParams(errorMessages, username, password, confirm, toEmail);
 
-        if (errorMessage.size() > 0) {
-            request.setAttribute("signupErrorMessages", errorMessage);
+        if (errorMessages.size() > 0) {
+            request.setAttribute("signupErrorMessages", errorMessages);
             request.getRequestDispatcher("signup.html").forward(request, response);
         }
         else {
@@ -47,28 +47,28 @@ public class SignupController extends HttpServlet {
         }
     }
 
-    private void validateParams(List<String> errorMessage, String username, String password,
+    private void validateParams(List<String> errorMessages, String username, String password,
                                                             String confirm, String toEmail) {
         if (username == null || username.equals("")) {
-            errorMessage.add("Username must be entered.");
+            errorMessages.add("Username must be entered.");
         }
 
         if (password == null || password.equals("")) {
-            errorMessage.add("Password must be entered.");
+            errorMessages.add("Password must be entered.");
         }
 
         if (confirm == null || confirm.equals("")) {
-            errorMessage.add("Password confirm must be entered.");
+            errorMessages.add("Password confirm must be entered.");
         }
 
         if (password != null && confirm != null) {
             if (!password.equals(confirm)) {
-                errorMessage.add("Password and confirm must be match.");
+                errorMessages.add("Password and confirm must be match.");
             }
         }
 
         if (toEmail == null || toEmail.equals("")) {
-            errorMessage.add("Email must be entered.");
+            errorMessages.add("Email must be entered.");
         }
     }
 

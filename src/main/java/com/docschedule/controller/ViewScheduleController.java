@@ -45,7 +45,7 @@ public class ViewScheduleController extends HttpServlet {
         int daysToDisplay = 7;
         String startDate = null;
         HttpSession session = request.getSession();
-        List<String> errorMessage = new ArrayList<String>();
+        List<String> errorMessages = new ArrayList<String>();
 
         String isFromGet = (String) request.getAttribute("fromGet");
 
@@ -75,21 +75,21 @@ public class ViewScheduleController extends HttpServlet {
             // Validate date entered in form field, if valid save in session
 
             if (startDate == null || startDate.equals("")) {
-                errorMessage.add("Start date must be entered.");
+                errorMessages.add("Start date must be entered.");
             }
             else {
                 try {
                     LocalDate.parse(startDate);
                     session.setAttribute("startDate", startDate);
                 } catch (DateTimeParseException e) {
-                    errorMessage.add("Start date must in format YYYY-MM-DD");
+                    errorMessages.add("Start date must in format YYYY-MM-DD");
                 }
             }
         }
 
         boolean gotDAOException = false;
 
-        if (errorMessage.size() == 0 && startDate != null) {
+        if (errorMessages.size() == 0 && startDate != null) {
             LocalDate sDate = LocalDate.parse(startDate);
             LocalDate eDate = sDate.plusDays(daysToDisplay-1);
             String endDate = eDate.toString();
@@ -104,7 +104,7 @@ public class ViewScheduleController extends HttpServlet {
             }
         }
         else {
-            request.setAttribute("dispSchedErrorMessages", errorMessage);
+            request.setAttribute("dispSchedErrorMessages", errorMessages);
         }
 
         if (gotDAOException) {
