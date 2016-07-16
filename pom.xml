@@ -117,7 +117,6 @@
                         <includeEmptyDirs>true</includeEmptyDirs>
                         <webResources>
                             <resource>
-                               <directory>${project.build.directory}/dependency</directory>
                                <targetPath>dependency</targetPath>
                                <includes>
                                     <include>**/*.jar</include>
