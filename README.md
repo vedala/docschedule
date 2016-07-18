@@ -4,6 +4,9 @@ DocSchedule application generates schedule for hospitalist
 physician groups. A hospitalist physician group usually
 provides 24x7x365 care to admitted patients at a hospital.
 
+### Application deployed on Heroku, at the following link: ###
+[DocSchedule deployment](https://dry-cliffs-56858.herokuapp.com/)
+
 ### A Basic Scenario ###
 
 Following scenario will help understand the application better:
@@ -20,21 +23,18 @@ Following scenario will help understand the application better:
 * Day shift is 7am to 7pm. Night shift is 7pm to 7am.
 
 ### Features in the Current Version ###
-* The application is currently in early stages of development, so very
-  basic functionality is available.
-* Upon login, schedule for 6 weeks is displayed (starting from current week).
-* Schedule page can be accessed only by authenticated users.
+* Display schedule, scroll forward and backward.
+* Create schedule for a date range based on standard rules.
 
 ### Planned Features ###
-* Ability to scroll schedule forward and backward, so users can view
-more than six weeks' worth of schedule.
-* Ability to generate schedule. This feature will enable group director
-  to create schedule for a period of time (usually a few months) based
-  on pre-set rules. The pre-set rules are similar to rules described in
-  the Basic Scenario above. This feature will be authorized only for
-  the director.
-* Ability to modify rules. Provide interface to enable the director
-  to modify rules. This feature only authorized for the director.
-* Add SSL support.
-* Ability to Sign-Up users from website.
+* Add user roles, admin user (director) has additional privileges.
+* Ability to modify rules. Provide interface to modify rules.
+  This feature only authorized for the director.
 * Enhance application to support multiple tenants.
+
+### Technologies Used ###
+* The application is developed using Java, MySQL.
+* Front-end is written mainly in basic HTML, CSS and JSP.
+* Tomcat used for local development, uses Jetty when deployed to Heroku.
+* Apache Shiro is used for user authentication.
+

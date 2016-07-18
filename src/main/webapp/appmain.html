@@ -15,12 +15,6 @@
 <div id="fulldiv">
 <jsp:include page="includes/header.html" />
 <div id="mainbody">
-<h3>Login</h3>
-<ul>
-<li>Login using link on top-right and click on "View Schedule" link that
-appears.</li>
-<li>Username/password: <b>appuser99/secret99</b></li>
-</ul>
 
 <h3>Overview</h3>
 
@@ -48,39 +42,16 @@ to admitted patients at a hospital.</p>
 
 <h3>Features in the Current Version</h3>
 <ul>
-<li>The application is currently in early stages of development, so very
-  basic functionality is available.</li>
-<li>Upon login, schedule for 6 weeks is displayed (starting from current week).</li>
-<li>Schedule page can be accessed only by authenticated users.</li>
+<li>Display schedule, scroll forward and backward.</li>
+<li>Create schedule for a date range based on standard rules.</li>
 </ul>
 
 <h3>Planned Features</h3>
 <ul>
-<li>Ability to scroll schedule forward and backward, so users can view
-more than six weeks' worth of schedule.</li>
-<li>Ability to generate schedule. This feature will enable group director
-  to create schedule for a period of time (usually a few months) based
-  on pre-set rules. The pre-set rules are similar to rules described in
-  the Basic Scenario above. This feature will be authorized only for
-  the director.</li>
-<li>Ability to modify rules. Provide interface to enable the director
-  to modify rules. This feature only authorized for the director.</li>
-<li>Add SSL support.</li>
-<li>Ability to Sign-Up users from website.</li>
+<li>Add user roles, admin user (director) has additional privileges.</li>
+<li>Ability to modify rules. Provide interface to modify rules.
+    This feature only authorized for the director.</li>
 <li>Enhance application to support multiple tenants.</li>
-</ul>
-  
-<h3>Technical Note</h3>
-<ul>
-<li>The application is developed using Java, Apache Tomcat, MySQL.</li>
-<li>Apache Shiro is used for user authentication.</li>
-<li>Front-end is written mainly in basic HTML, CSS and JSP.</li>
-<li>jQuery is the only front-end library used.</li>
-<li>Data is fetched from the back-end via a call to REST web service.
-  This service is developed in Java using Jersey REST library and
-  Jackson library for JSON conversion.</li>
-<li>Front-end uses Ajax to make a call to the web service and schedule
-  display is generated using JavaScript.</li>
 </ul>
 </div>
 </div>
