@@ -17,6 +17,7 @@ import java.time.format.DateTimeParseException;
 import com.docschedule.model.domain.DailySchedule;
 import com.docschedule.model.dao.DailyScheduleDAO;
 import com.docschedule.model.dao.DAOException;
+import com.docschedule.model.dao.ScheduleDAO;
 
 public class ViewScheduleController extends HttpServlet {
 
@@ -49,6 +50,8 @@ public class ViewScheduleController extends HttpServlet {
 
         String isFromGet = (String) request.getAttribute("fromGet");
 
+        boolean validateDAOException = false;
+
         if (isFromGet != null) {
             // Came to this method via GET
             startDate = (String) session.getAttribute("startDate");
@@ -76,7 +79,12 @@ public class ViewScheduleController extends HttpServlet {
 
             // Validate date entered in form field, if valid save in session
 
-            validateParams(errorMessages, startDate, upButton, downButton);
+            try {
+                validateParams(errorMessages, startDate, upButton, downButton, daysToDisplay);
+            } catch (DAOException e) {
+                validateDAOException = true;
+            }
+
             if (errorMessages.size() == 0) {
                 session.setAttribute("startDate", startDate);
             }
@@ -84,7 +92,7 @@ public class ViewScheduleController extends HttpServlet {
 
         boolean gotDAOException = false;
 
-        if (errorMessages.size() == 0 && startDate != null) {
+        if (errorMessages.size() == 0 && startDate != null && !validateDAOException) {
             LocalDate sDate = LocalDate.parse(startDate);
             LocalDate eDate = sDate.plusDays(daysToDisplay-1);
             String endDate = eDate.toString();
@@ -102,7 +110,7 @@ public class ViewScheduleController extends HttpServlet {
             request.setAttribute("dispSchedErrorMessages", errorMessages);
         }
 
-        if (gotDAOException) {
+        if (gotDAOException || validateDAOException) {
             request.getRequestDispatcher("dispsched_fail.html").forward(request, response);
         } else {
             request.getRequestDispatcher("schedmain.html").forward(request, response);
@@ -110,7 +118,7 @@ public class ViewScheduleController extends HttpServlet {
     }
 
     private void validateParams(List<String> errorMessages, String startDate,
-                                                    String upButton, String downButton) {
+                                   String upButton, String downButton, int daysToDisplay) {
 
         if (startDate == null || startDate.equals("")) {
             errorMessages.add("Start date must be entered.");
@@ -121,6 +129,18 @@ public class ViewScheduleController extends HttpServlet {
             } catch (DateTimeParseException e) {
                 errorMessages.add("Start date must in format YYYY-MM-DD");
             }
+        }
+
+        if (errorMessages.size() > 0) {
+            return;
+        }
+
+        ScheduleDAO scheduleDAO = new ScheduleDAO();
+        LocalDate sDate = LocalDate.parse(startDate);
+        LocalDate eDate = sDate.plusDays(daysToDisplay-1);
+        String endDate = eDate.toString();
+        if (scheduleDAO.checkScheduleInRange(startDate, endDate) == 0) {
+            errorMessages.add("No schedule exists for the date provided.");
         }
     }
 }
