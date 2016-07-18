@@ -57,6 +57,8 @@ public class ViewScheduleController extends HttpServlet {
             // Came to this method via POST
             String upButton = (String) request.getParameter("up");
             String downButton = (String) request.getParameter("down");
+
+            // If up and down buttons not clicked, implies Go button clicked
             if ((upButton != null) || (downButton != null)) {
                 startDate = (String) session.getAttribute("startDate");
                 LocalDate tempDate = LocalDate.parse(startDate);
@@ -74,16 +76,9 @@ public class ViewScheduleController extends HttpServlet {
 
             // Validate date entered in form field, if valid save in session
 
-            if (startDate == null || startDate.equals("")) {
-                errorMessages.add("Start date must be entered.");
-            }
-            else {
-                try {
-                    LocalDate.parse(startDate);
-                    session.setAttribute("startDate", startDate);
-                } catch (DateTimeParseException e) {
-                    errorMessages.add("Start date must in format YYYY-MM-DD");
-                }
+            validateParams(errorMessages, startDate, upButton, downButton);
+            if (errorMessages.size() == 0) {
+                session.setAttribute("startDate", startDate);
             }
         }
 
@@ -111,6 +106,21 @@ public class ViewScheduleController extends HttpServlet {
             request.getRequestDispatcher("dispsched_fail.html").forward(request, response);
         } else {
             request.getRequestDispatcher("schedmain.html").forward(request, response);
+        }
+    }
+
+    private void validateParams(List<String> errorMessages, String startDate,
+                                                    String upButton, String downButton) {
+
+        if (startDate == null || startDate.equals("")) {
+            errorMessages.add("Start date must be entered.");
+        }
+        else {
+            try {
+                LocalDate.parse(startDate);
+            } catch (DateTimeParseException e) {
+                errorMessages.add("Start date must in format YYYY-MM-DD");
+            }
         }
     }
 }
