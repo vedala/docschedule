@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import com.docschedule.model.service.SignupUser;
 import com.docschedule.model.service.ServiceException;
+import com.docschedule.model.dao.UserDAO;
 
 public class SignupController extends HttpServlet {
 
@@ -69,6 +70,16 @@ public class SignupController extends HttpServlet {
 
         if (toEmail == null || toEmail.equals("")) {
             errorMessages.add("Email must be entered.");
+        }
+
+        // do next validation if no validation errors so far
+        if (errorMessages.size() > 0) {
+            return;
+        }
+
+        UserDAO userDAO = new UserDAO();
+        if (userDAO.checkUserExists(username)) {
+            errorMessages.add("User already exists.");
         }
     }
 
