@@ -9,3 +9,4 @@ utilities
 /src/main/webapp/META-INF
 /src/main/webapp/WEB-INF/jetty-web.xml
 /src/main/resources/email.properties
+heroku.properties
