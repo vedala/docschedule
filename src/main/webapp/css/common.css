@@ -25,3 +25,7 @@
 		text-align: right;
 		}
 
+    #menu li {
+        display: inline-block;
+    }
+

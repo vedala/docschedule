@@ -1,49 +1,30 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <div id="header">
-    <table>
-        <tr>
-            <td id="logo" valign="top" width="40%">
-            DocSchedule
-            </td>
-            <td width="15%">
-            </td>
-            <td width="15%">
-            </td>
-            <td width="15%">
-            </td>
-            <td width="15%">
-            </td>
-        </tr>
-        <tr>
-            <td>
-            </td>
-            <td>
-            </td>
-            <td>
-            </td>
-            <td>
-            </td>
-            <td id="userdisp">
-                <shiro:user>User: <shiro:principal /></shiro:user>
-            </td>
-        </tr>
-        <tr>
-            <td>
-            </td>
-            <td>
+
+        <div id="logo">
+            <p>DocSchedule</p>
+        </div>
+
+        <div id="status">
+            <p><shiro:user>User: <shiro:principal /></shiro:user></p>
+        </div>
+
+        <div id="menu">
+            <ul>
+                <li>
                 <shiro:user><a href="<c:url value='/auth/createsched.html'/>">Create Schedule</a></shiro:user>
-            </td>
-            <td>
+            </li>
+            <li>
                 <shiro:guest><a href="<c:url value='/signup.html' />">Sign Up</a></shiro:guest>
-            </td>
-            <td>
+            </li>
+            <li>
                 <shiro:user><a href="<c:url value='/auth/ViewSched'/>">View Schedule</a></shiro:user>
-            </td>
-            <td id="loginoutlink">
+            </li>
+            <li id="loginoutlink">
                 <shiro:guest><a href="<c:url value='/login.html' />">Login</a></shiro:guest>
                 <shiro:user><a href="<c:url value='/logout' />">Logout</a></shiro:user>
-            </td>
-        </tr>
-    </table>
+            </li>
+            </ul>
+        </div>
     </div>
