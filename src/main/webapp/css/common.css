@@ -6,32 +6,48 @@
 			font-family: Verdana, Sans-serif;
 			font-size: 0.9em;
 			}
+/*
 	#header > table {width: 80%;
 					margin-left: 5%;
 					}
+*/
 	#mainbody {
 		width:80%;
-		margin-left: 5%;
-		margin-top: 20px;
-		margin-bottom: 60px;
-		}
+        margin: 0 auto;
+        padding-top: 20px;
+        padding-bottom: 60px;
+	}
+
+    #headerdiv {
+        width: 80%;
+        margin: 0 auto;
+    }
+
 	#logo {
 		font-family: Impact, Sans-serif;
 		color: #CC5500;
 		font-size: 2.5em;
 		font-weight: bold;
+        margin-top: 10px;
 	}
+
 	#userdisp, #loginoutlink {
 		text-align: right;
 		}
 
     #status {
         text-align: right;
-        padding: 0 20px 0 20px;
+        margin-bottom: 5px;
     }
+
     #menu {
         text-align: right;
-        padding: 0 20px 0 20px;
+    }
+
+    #menu ul {
+        height: auto;
+        margin: 0;
+        padding: 0;
     }
 
     #menu li {
