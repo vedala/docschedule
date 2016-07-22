@@ -6,11 +6,7 @@
 			font-family: Verdana, Sans-serif;
 			font-size: 0.9em;
 			}
-/*
-	#header > table {width: 80%;
-					margin-left: 5%;
-					}
-*/
+
 	#mainbody {
 		width:80%;
         margin: 0 auto;
@@ -54,5 +50,22 @@
         display: inline-block;
         list-style-type: none;
         margin-left: 5px;
+    }
+
+    #menu a:link, #menu a:visited, #menu a:hover, #menu a:active {
+        text-decoration: none;
+    }
+
+    #menu a:link, #menu a:visited {
+        color: #004A80;
+    }
+
+    #menu a:hover {
+        color: #592500;
+        text-shadow: 0px 0px 7px #CC5500;
+    }
+
+    #menu a:active {
+        color: #4CB5FF;
     }
 
