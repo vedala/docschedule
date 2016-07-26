@@ -79,7 +79,9 @@ public class ViewScheduleController extends HttpServlet {
 
             // Validate date entered in form field, if valid save in session
 
-            if (validateParams(errorMessages, startDate, upButton, downButton, daysToDisplay) < 0) {
+            try {
+                validateParams(errorMessages, startDate, upButton, downButton, daysToDisplay);
+            } catch (DAOException e) {
                 validateDAOException = true;
             }
 
@@ -115,11 +117,8 @@ public class ViewScheduleController extends HttpServlet {
         }
     }
 
-    /*
-     * @return -1 if DAO exception, 0 otherwise
-     */
-    private int validateParams(List<String> errorMessages, String startDate,
-                                   String upButton, String downButton, int daysToDisplay) {
+    private void validateParams(List<String> errorMessages, String startDate,
+                   String upButton, String downButton, int daysToDisplay) throws DAOException {
 
         if (startDate == null || startDate.equals("")) {
             errorMessages.add("Start date must be entered.");
@@ -133,7 +132,7 @@ public class ViewScheduleController extends HttpServlet {
         }
 
         if (errorMessages.size() > 0) {
-            return 0;
+            return;
         }
 
         ScheduleDAO scheduleDAO = new ScheduleDAO();
@@ -145,9 +144,7 @@ public class ViewScheduleController extends HttpServlet {
                 errorMessages.add("No schedule exists for the date provided.");
             }
         } catch (DAOException e) {
-            return -1;
+            throw new DAOException("Validation errors", e);
         }
-
-        return 0;
     }
 }
