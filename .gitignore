@@ -1,9 +1,3 @@
-webapp/WEB-INF/lib
-version0.1
-version0.2
-notes
-utilities
-/webapps2
 /target
 /src/main/db/create-user.sql
 /src/main/webapp/META-INF
