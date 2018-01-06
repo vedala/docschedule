@@ -5,7 +5,7 @@ physician groups. A hospitalist physician group usually
 provides 24x7x365 care to admitted patients at a hospital.
 
 ### Application deployed on Heroku, at the following link: ###
-[DocSchedule deployment](https://dry-cliffs-56858.herokuapp.com/)
+[DocSchedule deployment](http://quiet-inlet-57177.herokuapp.com/)
 
 ### A Basic Scenario ###
 
